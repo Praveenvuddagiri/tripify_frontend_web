@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { styled, Button, TextField, InputAdornment, IconButton, CircularProgress, Alert, Typography, Grid } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { styled,Button, TextField, Typography, Grid, CircularProgress, Alert  } from '@mui/material';
+import { baseAPI, forgotPasswordAPI } from '../GlobalConstants';
 import axios from 'axios';
-import { baseAPI, loginAPI } from '../GlobalConstants';
-import { useNavigate } from 'react-router-dom';
-import { useStateValue } from '../State/StateProvider';
 
 
 const RootBox = styled('div')({
@@ -32,7 +29,7 @@ const FormBox = styled('div')({
 
 const FieldBox = styled('div')({
     margin: '0.5rem 0',
-    width: '100%',
+    width: '300px',
 });
 
 const StyledButton = styled(Button)({
@@ -47,33 +44,20 @@ const TitleBox = styled('div')({
     fontWeight: 'bold',
     fontSize: '2rem',
 });
-
-const Login = () => {
-    const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
-    const [password, setPassword] = useState('');
+function ForgotPassword() {
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const [{user}, dispatch] = useStateValue();
 
-    useEffect(()=>{
-        if(user){
-            navigate('/');
-        }
-    },[])
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // api fetch for login goes here
+    const handleSubmit = async(event) => {
+        event.preventDefault();
         setIsLoading(true);
         setError(null);
 
         try {
-            const response = await axios.post(`${baseAPI}${loginAPI}`, {
+            const response = await axios.post(`${baseAPI}${forgotPasswordAPI}`, {
                 email,
-                password,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,23 +68,11 @@ const Login = () => {
 
             console.log('Login successful!', response);
 
-            const token = response.data.token;
-            localStorage.setItem("token", token);
+            const message = {color : 'green', message : `${response.data.message}, please check your mailbox and reset your password.`}
+            setError(message)
 
-            const userData = response.data.user;
-
-            dispatch({
-                type: "SET_USER",
-                user: userData
-            })
-            navigate('/');
 
         } catch (error) {
-
-            dispatch({
-                type: "SET_USER",
-                user: null,
-            });
             if (Math.floor(error.response.status / 100) === 5) {
                 error.response.data.color = 'rgb(255 99 0)';
             } else {
@@ -113,16 +85,13 @@ const Login = () => {
         } finally {
             setIsLoading(false);
         }
-    };
 
-    const handleShowPassword = () => {
-        setShowPassword(!showPassword);
     };
 
     return (
         <RootBox>
             <FormBox>
-                <TitleBox>Tripify Login</TitleBox>
+                <TitleBox>Tripify Forgot Password </TitleBox>
                 <form onSubmit={handleSubmit}>
                     <FieldBox>
                         <TextField
@@ -137,28 +106,8 @@ const Login = () => {
                             required
                         />
                     </FieldBox>
-                    <FieldBox>
-                        <TextField
-                            fullWidth
-                            label="Password"
-                            variant="outlined"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type={showPassword ? 'text' : 'password'}
-                            required
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleShowPassword}>
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </FieldBox>
                     <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
-                        {isLoading ? <CircularProgress color="primary" /> : 'Login'}
+                        {isLoading ? <CircularProgress color="primary" /> : 'Reset Password'}
                     </StyledButton>
 
                     <Grid
@@ -167,8 +116,8 @@ const Login = () => {
                         justifyContent="space-between"
                         alignItems="center">
                         <Typography variant="body1" color="textPrimary">
-                            <a href="/forgotpassword" color="primary" variant='body2'>
-                                Forgot Password?
+                            <a href="/login" color="primary" variant='body2'>
+                                Login? 
                             </a>
                         </Typography>
 
@@ -178,18 +127,16 @@ const Login = () => {
                             </a>
                         </Typography>
                     </Grid>
-
-
                 </form>
             </FormBox>
             {error && (
-                <Alert variant='soft' color='error' style={{ color: error.color }}>
+                <Alert variant='soft' style={{ color: error.color }}>
                     {error.message}
                 </Alert>
 
             )}
         </RootBox>
     );
-};
+}
 
-export default Login;
+export default ForgotPassword

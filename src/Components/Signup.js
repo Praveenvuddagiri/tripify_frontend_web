@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { styled, Button, TextField, InputAdornment, IconButton, CircularProgress, Alert, Typography, Grid } from '@mui/material';
+import { styled, Button, TextField, InputAdornment, IconButton, CircularProgress, Alert, Typography, Grid, MenuItem } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
-import { baseAPI, loginAPI } from '../GlobalConstants';
+import { baseAPI, signUpAPI } from '../GlobalConstants';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../State/StateProvider';
 
@@ -48,11 +48,13 @@ const TitleBox = styled('div')({
     fontSize: '2rem',
 });
 
-const Login = () => {
+const Signup = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [role, setRole] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -64,16 +66,38 @@ const Login = () => {
         }
     },[])
 
+    const isValidPassword = (password) => {
+        const hasMinimumLength = password.length >= 8;
+        const hasNumericCharacters = (password.match(/[0-9]/g) || []).length >= 3;
+        const hasUppercaseCharacter = (password.match(/[A-Z]/g) || []).length >= 1;
+        const hasSpecialCharacter = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+
+        return hasMinimumLength && hasNumericCharacters && hasUppercaseCharacter && hasSpecialCharacter;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // api fetch for login goes here
+
+        if (!isValidPassword(password)) {
+            const error = {
+                message: "Please ensure that the password should have a minimum length of 8 characters, at least 3 numeric characters, 1 uppercase letter, and 1 special character",
+                color: "red"
+            };
+
+            setError(error);
+            return;
+        }
         setIsLoading(true);
         setError(null);
 
+
         try {
-            const response = await axios.post(`${baseAPI}${loginAPI}`, {
+            const response = await axios.post(`${baseAPI}${signUpAPI}`, {
                 email,
                 password,
+                name,
+                role
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,8 +106,7 @@ const Login = () => {
                 }
             });
 
-            console.log('Login successful!', response);
-
+            console.log('Register successful!', response);
             const token = response.data.token;
             localStorage.setItem("token", token);
 
@@ -95,8 +118,8 @@ const Login = () => {
             })
             navigate('/');
 
-        } catch (error) {
 
+        } catch (error) {
             dispatch({
                 type: "SET_USER",
                 user: null,
@@ -122,8 +145,21 @@ const Login = () => {
     return (
         <RootBox>
             <FormBox>
-                <TitleBox>Tripify Login</TitleBox>
+                <TitleBox>Tripify Registration</TitleBox>
                 <form onSubmit={handleSubmit}>
+                    <FieldBox>
+                        <TextField
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            label="Name"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            inputProps={{ maxLength: 50 }}
+                            required
+                        />
+                    </FieldBox>
                     <FieldBox>
                         <TextField
                             fullWidth
@@ -140,10 +176,28 @@ const Login = () => {
                     <FieldBox>
                         <TextField
                             fullWidth
+                            label="Role"
+                            variant="outlined"
+                            select
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            required
+                        >
+                            <MenuItem value="admin">Admin</MenuItem>
+                            <MenuItem value="serviceprovider">Service Provider</MenuItem>
+                        </TextField>
+                    </FieldBox>
+
+                    <FieldBox>
+                        <TextField
+                            fullWidth
                             label="Password"
                             variant="outlined"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => {
+                                const inputValue = e.target.value;
+                                setPassword(inputValue);
+                            }}
                             type={showPassword ? 'text' : 'password'}
                             required
                             InputProps={{
@@ -156,6 +210,7 @@ const Login = () => {
                                 ),
                             }}
                         />
+
                     </FieldBox>
                     <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
                         {isLoading ? <CircularProgress color="primary" /> : 'Login'}
@@ -166,16 +221,11 @@ const Login = () => {
                         direction="row"
                         justifyContent="space-between"
                         alignItems="center">
-                        <Typography variant="body1" color="textPrimary">
-                            <a href="/forgotpassword" color="primary" variant='body2'>
-                                Forgot Password?
-                            </a>
-                        </Typography>
 
                         <Typography variant="body1" color="textPrimary">
-                            <a href="/register" color="primary" variant='body2'>
-                                New User?
-                            </a>
+                                <a href="/login" color="primary" variant='body2'>
+                                    Login?
+                                </a>
                         </Typography>
                     </Grid>
 
@@ -192,4 +242,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
