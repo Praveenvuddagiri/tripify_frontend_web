@@ -5,6 +5,7 @@ import axios from 'axios';
 import { baseAPI, loginAPI } from '../GlobalConstants';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../State/StateProvider';
+import Header from './Header';
 
 
 const RootBox = styled('div')({
@@ -59,6 +60,8 @@ const Login = () => {
     const [{user}, dispatch] = useStateValue();
 
     useEffect(()=>{
+        console.log(user)
+        
         if(user){
             navigate('/');
         }
@@ -120,6 +123,8 @@ const Login = () => {
     };
 
     return (
+        <>
+        <Header/>
         <RootBox>
             <FormBox>
                 <TitleBox>Tripify Login</TitleBox>
@@ -189,6 +194,7 @@ const Login = () => {
 
             )}
         </RootBox>
+    </>
     );
 };
 
