@@ -61,10 +61,10 @@ const Signup = () => {
     const [{user}, dispatch] = useStateValue();
 
     useEffect(()=>{
-        if(user){
+        if (localStorage.getItem("token")) {
             navigate('/');
         }
-    },[])
+    },[user])
 
     const isValidPassword = (password) => {
         const hasMinimumLength = password.length >= 8;
@@ -106,11 +106,11 @@ const Signup = () => {
                 }
             });
 
-            console.log('Register successful!', response);
             const token = response.data.token;
             localStorage.setItem("token", token);
 
             const userData = response.data.user;
+            localStorage.setItem("user", JSON.stringify(userData));
 
             dispatch({
                 type: "SET_USER",
@@ -120,10 +120,7 @@ const Signup = () => {
 
 
         } catch (error) {
-            dispatch({
-                type: "SET_USER",
-                user: null,
-            });
+            
             if (Math.floor(error.response.status / 100) === 5) {
                 error.response.data.color = 'rgb(255 99 0)';
             } else {

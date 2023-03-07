@@ -3,7 +3,7 @@ import { styled, Button, TextField, InputAdornment, IconButton, CircularProgress
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { baseAPI, loginAPI } from '../GlobalConstants';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import { useStateValue } from '../State/StateProvider';
 import Header from './Header';
 
@@ -57,15 +57,13 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const [{user}, dispatch] = useStateValue();
+    const [{  }, dispatch] = useStateValue();
 
-    useEffect(()=>{
-        console.log(user)
-        
-        if(user){
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
             navigate('/');
         }
-    },[])
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,25 +83,26 @@ const Login = () => {
                 }
             });
 
-            console.log('Login successful!', response);
 
             const token = response.data.token;
             localStorage.setItem("token", token);
+            
 
             const userData = response.data.user;
+            localStorage.setItem("user", JSON.stringify(userData));
 
-            dispatch({
-                type: "SET_USER",
-                user: userData
-            })
-            navigate('/');
+            if(userData){
+                dispatch({
+                    type: "SET_USER",
+                    user: userData
+                })
+                navigate('/');
+            }
+            
 
         } catch (error) {
 
-            dispatch({
-                type: "SET_USER",
-                user: null,
-            });
+
             if (Math.floor(error.response.status / 100) === 5) {
                 error.response.data.color = 'rgb(255 99 0)';
             } else {
@@ -124,77 +123,77 @@ const Login = () => {
 
     return (
         <>
-        <Header/>
-        <RootBox>
-            <FormBox>
-                <TitleBox>Tripify Login</TitleBox>
-                <form onSubmit={handleSubmit}>
-                    <FieldBox>
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            label="Email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            inputProps={{ maxLength: 50 }}
-                            required
-                        />
-                    </FieldBox>
-                    <FieldBox>
-                        <TextField
-                            fullWidth
-                            label="Password"
-                            variant="outlined"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type={showPassword ? 'text' : 'password'}
-                            required
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleShowPassword}>
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </FieldBox>
-                    <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
-                        {isLoading ? <CircularProgress color="primary" /> : 'Login'}
-                    </StyledButton>
+            <Header />
+            <RootBox>
+                <FormBox>
+                    <TitleBox>Tripify Login</TitleBox>
+                    <form onSubmit={handleSubmit}>
+                        <FieldBox>
+                            <TextField
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                label="Email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                inputProps={{ maxLength: 50 }}
+                                required
+                            />
+                        </FieldBox>
+                        <FieldBox>
+                            <TextField
+                                fullWidth
+                                label="Password"
+                                variant="outlined"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                type={showPassword ? 'text' : 'password'}
+                                required
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={handleShowPassword}>
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </FieldBox>
+                        <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
+                            {isLoading ? <CircularProgress color="primary" /> : 'Login'}
+                        </StyledButton>
 
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center">
-                        <Typography variant="body1" color="textPrimary">
-                            <a href="/forgotpassword" color="primary" variant='body2'>
-                                Forgot Password?
-                            </a>
-                        </Typography>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center">
+                            <Typography variant="body1" color="textPrimary">
+                                <a href="/forgotpassword" color="primary" variant='body2'>
+                                    Forgot Password?
+                                </a>
+                            </Typography>
 
-                        <Typography variant="body1" color="textPrimary">
-                            <a href="/register" color="primary" variant='body2'>
-                                New User?
-                            </a>
-                        </Typography>
-                    </Grid>
+                            <Typography variant="body1" color="textPrimary">
+                                <a href="/register" color="primary" variant='body2'>
+                                    New User?
+                                </a>
+                            </Typography>
+                        </Grid>
 
 
-                </form>
-            </FormBox>
-            {error && (
-                <Alert variant='soft' color='error' style={{ color: error.color }}>
-                    {error.message}
-                </Alert>
+                    </form>
+                </FormBox>
+                {error && (
+                    <Alert variant='soft' color='error' style={{ color: error.color }}>
+                        {error.message}
+                    </Alert>
 
-            )}
-        </RootBox>
-    </>
+                )}
+            </RootBox>
+        </>
     );
 };
 
