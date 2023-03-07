@@ -1,34 +1,41 @@
-import { Button } from '@mui/material';
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../State/StateProvider';
+import { AppBar, Toolbar, Typography, Button, Avatar } from '@mui/material';
 
 function Header() {
   const [{ user }] = useStateValue();
   const navigate = useNavigate();
 
-  console.log(user);
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   const userData = JSON.parse(localStorage.getItem('user'));
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/login')
-  }
-
-  console.log(user);
   return (
-    <div>Header
-
-      {userData ?
-        <Button onClick={handleLogout}>Logout</Button> :
-        <div>
-          <Button>Login</Button>
-          <Button>Signup</Button>
-        </div>
-      }
-    </div>
-  )
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          TRIPIFY
+        </Typography>
+        {userData ? (
+          <>
+            <Avatar src={user?.avatar} alt={user?.name} sx={{ marginLeft: 2 }} />
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button color="inherit" onClick={()=>{navigate("/login")}}>Login</Button>
+            <Button color="inherit" onClick={()=>{navigate("/register")}}>Signup</Button>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
 }
 
-export default Header
+export default Header;
