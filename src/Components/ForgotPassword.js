@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { styled,Button, TextField, Typography, Grid, CircularProgress, Alert  } from '@mui/material';
+import { styled, Button, TextField, Typography, Grid, CircularProgress, Alert } from '@mui/material';
 import { baseAPI, forgotPasswordAPI } from '../GlobalConstants';
 import axios from 'axios';
+import Header from './Header';
 
 
 const RootBox = styled('div')({
@@ -50,7 +51,7 @@ function ForgotPassword() {
     const [error, setError] = useState(null);
 
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         setError(null);
@@ -68,7 +69,7 @@ function ForgotPassword() {
 
             console.log('Login successful!', response);
 
-            const message = {color : 'green', message : `${response.data.message}, please check your mailbox and reset your password.`}
+            const message = { color: 'green', message: `${response.data.message}, please check your mailbox and reset your password.` }
             setError(message)
 
 
@@ -89,53 +90,57 @@ function ForgotPassword() {
     };
 
     return (
-        <RootBox>
-            <FormBox>
-                <TitleBox>Tripify Forgot Password </TitleBox>
-                <form onSubmit={handleSubmit}>
-                    <FieldBox>
-                        <TextField
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            label="Email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            inputProps={{ maxLength: 50 }}
-                            required
-                        />
-                    </FieldBox>
-                    <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
-                        {isLoading ? <CircularProgress color="primary" /> : 'Reset Password'}
-                    </StyledButton>
+        <>
+            <Header />
 
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center">
-                        <Typography variant="body1" color="textPrimary">
-                            <a href="/login" color="primary" variant='body2'>
-                                Login? 
-                            </a>
-                        </Typography>
+            <RootBox>
+                <FormBox>
+                    <TitleBox>Tripify Forgot Password </TitleBox>
+                    <form onSubmit={handleSubmit}>
+                        <FieldBox>
+                            <TextField
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                label="Email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                inputProps={{ maxLength: 50 }}
+                                required
+                            />
+                        </FieldBox>
+                        <StyledButton variant="contained" color="primary" type="submit" disabled={isLoading}>
+                            {isLoading ? <CircularProgress color="primary" /> : 'Reset Password'}
+                        </StyledButton>
 
-                        <Typography variant="body1" color="textPrimary">
-                            <a href="/register" color="primary" variant='body2'>
-                                New User?
-                            </a>
-                        </Typography>
-                    </Grid>
-                </form>
-            </FormBox>
-            {error && (
-                <Alert variant='soft' style={{ color: error.color }}>
-                    {error.message}
-                </Alert>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center">
+                            <Typography variant="body1" color="textPrimary">
+                                <a href="/login" color="primary" variant='body2'>
+                                    Login?
+                                </a>
+                            </Typography>
 
-            )}
-        </RootBox>
+                            <Typography variant="body1" color="textPrimary">
+                                <a href="/register" color="primary" variant='body2'>
+                                    New User?
+                                </a>
+                            </Typography>
+                        </Grid>
+                    </form>
+                </FormBox>
+                {error && (
+                    <Alert variant='soft' style={{ color: error.color }}>
+                        {error.message}
+                    </Alert>
+
+                )}
+            </RootBox>
+        </>
     );
 }
 

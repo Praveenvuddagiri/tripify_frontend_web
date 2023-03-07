@@ -15,13 +15,14 @@ function Header() {
   const userData = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           TRIPIFY
         </Typography>
         {userData ? (
           <>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>{userData.name} Dashboard</Typography>
             <Avatar src={user?.avatar} alt={user?.name} sx={{ marginLeft: 2 }} />
             <Button color="inherit" onClick={handleLogout}>
               Logout

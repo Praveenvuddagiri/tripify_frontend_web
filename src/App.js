@@ -11,8 +11,6 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          {/* <Route path='/' element={<HomeMain />} />
-          <Route path='/signup' element={<Signup />} /> */}
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
