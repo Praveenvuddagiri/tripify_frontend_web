@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CategoryList from './Categories/CategoryList';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -11,6 +12,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from '@mui/material/Box';
 
+
 const drawerWidth = 240;
 
 const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
@@ -18,13 +20,13 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
     
 
     const renderBody = () => {
-        // switch (selectedMenuItem) {
+        switch (selectedMenuItem) {
         //   case 'analytics':
         //     return <analytics />;
         //   case 'places':
         //     return <Places />;
-        //   case 'categories':
-        //     return <Categories />;
+          case 'categories':
+            return <CategoryList />;
         //   case 'islands':
         //     return <Islands />;
         //   case 'services':
@@ -37,9 +39,9 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         //     return <Approvals />;
         //   case 'feedbacks':
         //     return <Feedbacks />;
-        //   default:
-        //     return null;
-        // }
+          default:
+            return null;
+        }
       };
 
 
@@ -145,7 +147,7 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                     </ListItem>
                 </List>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>
                {renderBody()}
             </Box>
         </>
