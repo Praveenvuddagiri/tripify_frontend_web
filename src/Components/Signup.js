@@ -69,13 +69,13 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [{ user }, dispatch] = useStateValue();
+  
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       navigate("/");
     }
-  }, [user]);
+  }, []);
 
   const isValidPassword = (password) => {
     const hasMinimumLength = password.length >= 8;
@@ -128,17 +128,19 @@ const Signup = () => {
         }
       );
 
-      const token = response.data.token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("email", email);
 
-      const userData = response.data.user;
-      localStorage.setItem("user", JSON.stringify(userData));
+      // const token = response.data.token;
+      // localStorage.setItem("token", token);
 
-      dispatch({
-        type: "SET_USER",
-        user: userData,
-      });
-      navigate("/");
+      // const userData = response.data.user;
+      // localStorage.setItem("user", JSON.stringify(userData));
+
+      // dispatch({
+      //   type: "SET_USER",
+      //   user: userData,
+      // });
+      navigate("/otpverify");
     } catch (error) {
       if (Math.floor(error.response.status / 100) === 5) {
         error.response.data.color = "rgb(255 99 0)";
@@ -233,7 +235,7 @@ const Signup = () => {
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? <CircularProgress color="primary" /> : "Login"}
+              {isLoading ? <CircularProgress color="primary" /> : "Sign Up"}
             </StyledButton>
 
             <Grid
