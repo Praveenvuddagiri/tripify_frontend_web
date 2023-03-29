@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CategoryList from './Categories/CategoryList';
+import AddPlace from './Places/AddPlace';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -23,8 +24,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         switch (selectedMenuItem) {
         //   case 'analytics':
         //     return <analytics />;
-        //   case 'places':
-        //     return <Places />;
+           case 'places':
+             return <AddPlace />;
           case 'categories':
             return <CategoryList />;
         //   case 'islands':
