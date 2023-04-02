@@ -14,7 +14,7 @@ import {
   Container,
   Card,
   CardContent,
-} from '@material-ui/core';
+} from '@mui/material';
 
 const AddPlace = () => {
   const [location, setLocation] = useState('');

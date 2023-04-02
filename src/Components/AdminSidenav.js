@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import CategoryList from './Categories/CategoryList';
+// import React, { useState } from 'react';
 import AddPlace from './Places/AddPlace';
+import CategoryOption from './Categories/CategoryOption';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -27,7 +27,7 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
            case 'places':
              return <AddPlace />;
           case 'categories':
-            return <CategoryList />;
+            return <CategoryOption />;
         //   case 'islands':
         //     return <Islands />;
         //   case 'services':
