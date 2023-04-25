@@ -169,7 +169,7 @@ const AddPlace = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary">
-                    Save
+                    Add Place
                   </Button>
                 </Grid>
               </Grid>

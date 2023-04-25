@@ -1,51 +1,16 @@
 import React from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-// import axios from "axios";
 
-const AddCategoryForm = () => {
-  const handleSubmit = (e) =>{
+const AddIsland = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-      // api fetch for addCategory goes here
-      // setIsLoading(true);
-      // setError(null);
-
-      // try {
-      //     const response = await axios.post(`${baseAPI}${addCategoryAPI}`, {
-      //         CategoryName,
-      //         CategoryDescription,
-      //     }, {
-      //         headers: {
-      //             'Content-Type': 'application/json',
-      //             "Access-Control-Allow-Origin": "*",
-      //             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-      //         }
-      //     });
-
-      //     const token = response.data.token;
-      //     localStorage.setItem("token", token);
-          
-
-      // } catch (error) {
-
-
-      //     if (Math.floor(error.response.status / 100) === 5) {
-      //         error.response.data.color = 'rgb(255 99 0)';
-      //     } else {
-      //         error.response.data.color = 'red';
-      //     }
-
-      //     setError(error.response.data);
-
-
-      // } finally {
-      //     setIsLoading(false);
-      // }
+    // handle form submission here
   };
 
   return (
     <Box m={3}>
       <Typography variant="h4" align="center" gutterBottom>
-        Add Category
+        Add Island
       </Typography>
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -55,7 +20,7 @@ const AddCategoryForm = () => {
               label="Name"
               variant="outlined"
               required
-              name="CategoryName"
+              name="name"
               // add any additional props you need for this input
             />
           </Grid>
@@ -65,7 +30,7 @@ const AddCategoryForm = () => {
               label="Description"
               variant="outlined"
               required
-              name="CategoryDescription"
+              name="description"
               multiline
      
             />
@@ -92,7 +57,7 @@ const AddCategoryForm = () => {
               color="primary"
               fullWidth
             >
-              Add Category
+              Add Island
             </Button>
           </Grid>
         </Grid>
@@ -101,4 +66,4 @@ const AddCategoryForm = () => {
   );
 };
 
-export default AddCategoryForm;
+export default AddIsland;

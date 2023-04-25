@@ -4,7 +4,6 @@ import Login from './Components/Login';
 import ForgotPassword from './Components/ForgotPassword';
 import Signup from './Components/Signup';
 import Home from './Components/Home';
-import AddCategoryForm from './Components/Categories/AddCategoryForm';
 import OtpVerification from './Components/OtpVerification';
 
 
@@ -17,7 +16,6 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/register' element={<Signup />} />
-          <Route path='/AddCategory' element={<AddCategoryForm />} />
           <Route path='/otpverify' element={<OtpVerification />} />
         </Routes>
       </div>
