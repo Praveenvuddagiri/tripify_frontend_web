@@ -117,7 +117,7 @@ const AddIslandForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Box component="label" htmlFor="category-image-upload" display="block">
+              <Box component="label" htmlFor="island-image-upload" display="block">
                 <Button
                   variant="contained"
                   fullWidth
@@ -129,7 +129,7 @@ const AddIslandForm = () => {
                 </Button>
                 <input
                   type="file"
-                  id="Island-image-upload"
+                  id="island-image-upload"
                   name="IslandImage"
                   accept="image/*"
                   required
@@ -139,7 +139,7 @@ const AddIslandForm = () => {
               </Box>
               {imagePreview && (
                 <Box mt={1} display="flex" justifyContent="center" alignItems="center">
-                  <img src={imagePreview} alt="Island Preview" style={{ maxWidth: "100%", width: "300px" }} />
+                  <img src={imagePreview} alt="Category Preview" style={{ maxWidth: "100%", width: "300px" }} />
                 </Box>
               )}
             </Grid>

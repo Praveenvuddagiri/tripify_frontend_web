@@ -8,7 +8,7 @@ import axios from "axios";
 
 
 function AllIslands({ jumpToTab }) {
-  const [Islands, setIslands] = useState([]);
+  const [islands, setIslands] = useState([]);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +24,7 @@ function AllIslands({ jumpToTab }) {
         }
       });
 
-      setIslands(response.data.Islands);
+      setIslands(response.data.islands);
 
 
     } catch (error) {
@@ -75,11 +75,11 @@ function AllIslands({ jumpToTab }) {
       </Box>}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {
-          Islands.map((Island) =>
-            <Grid item xs={2} sm={4} md={3} mb={3} key={Island._id}>
+          islands.map((island) =>
+            <Grid item xs={2} sm={4} md={3} mb={3} key={island._id}>
               <div>
                 <IslandCard
-                  Island={Island}
+                  island={island}
                   setError={setError}
                   handleClick={handleClick}
                   fetchData={fetchData}

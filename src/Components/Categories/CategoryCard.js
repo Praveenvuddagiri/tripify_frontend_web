@@ -74,9 +74,11 @@ function CategoryCard({ category, setError, handleClick, fetchData, jumpToTab })
                 <Typography gutterBottom variant="h5" component="div">
                     {category.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {category.description}
-                </Typography>
+                <div style={{ height: "100px", overflow: "auto" }}>
+                    <Typography variant="body1" color="text.secondary">
+                        {category.description}
+                    </Typography>
+                </div>
             </CardContent>
             <CardActions style={{ display: 'flex', justifyContent: 'space-evenly' }}>
 

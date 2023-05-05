@@ -11,14 +11,14 @@ import axios from 'axios';
 import { baseAPI, deleteUpdateIsland } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function IslandCard({ Island, setError, handleClick, fetchData, jumpToTab }) {
+function IslandCard({ island, setError, handleClick, fetchData, jumpToTab }) {
 
     const [deleteLoader, setDeletLoader] = React.useState(false);
 
     const handleDelete = async () => {
         try {
             setDeletLoader(true);
-            await axios.delete(`${baseAPI}${deleteUpdateIsland}/${Island._id.toString()}`, {
+            await axios.delete(`${baseAPI}${deleteUpdateIsland}/${island._id.toString()}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -58,7 +58,7 @@ function IslandCard({ Island, setError, handleClick, fetchData, jumpToTab }) {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        localStorage.setItem('Island',JSON.stringify(Island));
+        localStorage.setItem('Island', JSON.stringify(island));
 
         jumpToTab(2);
     }
@@ -67,16 +67,18 @@ function IslandCard({ Island, setError, handleClick, fetchData, jumpToTab }) {
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 sx={{ height: 140 }}
-                image={Island.image.secure_url}
-                title={Island.image.id}
+                image={island.image.secure_url}
+                title={island.image.id}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {Island.name}
+                    {island.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {Island.description}
-                </Typography>
+                <div style={{ height: "100px", overflow: "auto" }}>
+                    <Typography variant="body1" color="text.secondary">
+                        {island.description}
+                    </Typography>
+                </div>
             </CardContent>
             <CardActions style={{ display: 'flex', justifyContent: 'space-evenly' }}>
 

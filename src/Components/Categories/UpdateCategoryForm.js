@@ -1,33 +1,33 @@
 import { Alert, Box, Button, Grid, Snackbar, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { baseAPI, deleteUpdateIsland } from '../../GlobalConstants';
+import { baseAPI, deleteUpdateCategory } from '../../GlobalConstants';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { LoadingButton } from '@mui/lab';
 
 
-function UpdateIslandForm({ jumpToTab }) {
+function UpdateCategoryForm({ jumpToTab }) {
     
-    const [IslandName, setIslandName] = useState('');
-    const [IslandDesc, setIslandDesc] = useState('');
-    const [IslandId, setIslandId] = useState('');
-    const [IslandImage, setIslandImage] = useState(null);
+    const [categoryName, setCategoryName] = useState('');
+    const [categoryDesc, setCategoryDesc] = useState('');
+    const [categoryId, setCategoryId] = useState('');
+    const [categoryImage, setCategoryImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
-    var Island;
+    var category;
 
     useEffect(() => {
-        if (!localStorage.getItem('Island')) {
+        if (!localStorage.getItem('category')) {
             jumpToTab(0);
         }
         else{
-            Island = JSON.parse(localStorage.getItem('Island'));
-            setIslandName(Island.name);
-            setIslandDesc(Island.description);
-            setImagePreview(Island.image.secure_url);
-            setIslandId(Island._id.toString());
+            category = JSON.parse(localStorage.getItem('category'));
+            setCategoryName(category.name);
+            setCategoryDesc(category.description);
+            setImagePreview(category.image.secure_url);
+            setCategoryId(category._id.toString());
         }
         
     }, [])
@@ -37,10 +37,10 @@ function UpdateIslandForm({ jumpToTab }) {
         setIsLoading(true);
 
         try {
-            await axios.put(`${baseAPI}${deleteUpdateIsland}/${IslandId}`, {
-                "name": IslandName,
-                "description": IslandDesc,
-                "image": IslandImage
+            await axios.put(`${baseAPI}${deleteUpdateCategory}/${categoryId}`, {
+                "name": categoryName,
+                "description": categoryDesc,
+                "image": categoryImage
             }, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -51,7 +51,7 @@ function UpdateIslandForm({ jumpToTab }) {
             });
             let successAlert = {
                 errorType: 'success',
-                message: "Island has been successfully updated"
+                message: "Category has been successfully updated"
             }
 
             setError(successAlert);
@@ -78,7 +78,7 @@ function UpdateIslandForm({ jumpToTab }) {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setIslandImage(file);
+            setCategoryImage(file);
             const imageUrl = URL.createObjectURL(file);
             setImagePreview(imageUrl);
         }
@@ -102,7 +102,7 @@ function UpdateIslandForm({ jumpToTab }) {
         <>
             <Box display="flex" flexDirection='column' justifyContent="center" alignItems="center" marginTop='15px'>
                 <Typography variant="h5" align="center" gutterBottom>
-                    Update Island
+                    Update Category
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} container justify="center" encType='multipart/form-data'>
                     <Grid container spacing={2}>
@@ -112,9 +112,9 @@ function UpdateIslandForm({ jumpToTab }) {
                                 label="Name"
                                 variant="outlined"
                                 required
-                                name="IslandName"
-                                value={IslandName}
-                                onChange={(e) => setIslandName(e.target.value)}
+                                name="CategoryName"
+                                value={categoryName}
+                                onChange={(e) => setCategoryName(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -123,15 +123,15 @@ function UpdateIslandForm({ jumpToTab }) {
                                 label="Description"
                                 variant="outlined"
                                 required
-                                name="IslandDescription"
-                                value={IslandDesc}
+                                name="CategoryDescription"
+                                value={categoryDesc}
                                 multiline
                                 rows={4}
-                                onChange={(e) => setIslandDesc(e.target.value)}
+                                onChange={(e) => setCategoryDesc(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Box component="label" htmlFor="Island-image-upload" display="block">
+                            <Box component="label" htmlFor="category-image-upload" display="block">
                                 <Button
                                     variant="contained"
                                     fullWidth
@@ -143,8 +143,8 @@ function UpdateIslandForm({ jumpToTab }) {
                                 </Button>
                                 <input
                                     type="file"
-                                    id="Island-image-upload"
-                                    name="IslandImage"
+                                    id="category-image-upload"
+                                    name="CategoryImage"
                                     accept="image/*"
                                     onChange={handleImageChange}
                                     style={{ display: "none" }}
@@ -153,7 +153,7 @@ function UpdateIslandForm({ jumpToTab }) {
                             {imagePreview && (
                                 <Box mt={1} display="flex" justifyContent="center" alignItems="center">
                                     <img src={imagePreview} 
-                                    alt="Island Preview" 
+                                    alt="Category Preview" 
                                     style={{ maxWidth: "100%", width: "300px" }} />
                                 </Box>
                             )}
@@ -178,7 +178,7 @@ function UpdateIslandForm({ jumpToTab }) {
                                     color="primary"
                                     fullWidth
                                 >
-                                    Update Island
+                                    Update Category
                                 </Button>
 
                             }
@@ -195,4 +195,4 @@ function UpdateIslandForm({ jumpToTab }) {
     );
 }
 
-export default UpdateIslandForm;
+export default UpdateCategoryForm;
