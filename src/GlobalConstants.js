@@ -8,3 +8,6 @@ export const OtpRegenerateAPI = "api/v1/regenerate/otp";
 export const addCategoryAPI = "api/v1/category/add";
 export const getAllCategories = "api/v1/category/all";
 export const deleteUpdateCategory = "api/v1/category";
+export const addIslandAPI = "api/v1/island/add";
+export const getAllIslands = "api/v1/island/all";
+export const deleteUpdateIsland = "api/v1/island";

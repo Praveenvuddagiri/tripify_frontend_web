@@ -1,10 +1,5 @@
 // import React, { useState } from 'react';
 import AddPlace from './Places/AddPlace';
-import DeletePlace from './Places/DeletePlace';
-import AddCategoryForm from './Categories/AddCategoryForm';
-import DeleteCategory from './Categories/DeleteCategory';
-import UpdateCategory from './Categories/UpdateCategory';
-import AddIsland from './Islands/AddIsland';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -16,8 +11,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 // import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from '@mui/material/Box';
-import DeleteIsland from './Islands/DeleteIsland';
 import CategoryHome from './Categories/CategoryHome';
+import IslandHome from './Islands/IslandHome';
 
 
 const drawerWidth = 240;
@@ -30,20 +25,12 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         switch (selectedMenuItem) {
         //   case 'analytics':
         //     return <analytics />;
-           case 'AddPlace':
-             return <AddPlace />;
-             case 'DeletePlace':
-                return <DeletePlace />;  
+           case 'Place':
+             return <AddPlace />; 
           case 'category':
             return <CategoryHome />;
-            case 'DeleteCategory':
-                return <DeleteCategory />;
-            case 'UpdateCategory':
-                    return <UpdateCategory />;
-           case 'AddIsland':
-             return <AddIsland />;
-             case 'DeleteIsland':
-                return <DeleteIsland />;
+           case 'Island':
+             return <IslandHome />;
         //   case 'services':
         //     return <Services />;
         //   case 'tourists':
@@ -93,23 +80,14 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         </ListItemIcon>
                         <ListItemText primary="Analytics" sx={{ color: '#fff' }} />
                     </ListItem> */}
-                    <ListItem button selected={selectedMenuItem === 'AddPlace'}
-                        onClick={() => onMenuItemClick('AddPlace')}
+                    <ListItem button selected={selectedMenuItem === 'Place'}
+                        onClick={() => onMenuItemClick('Place')}
                         
                         sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
                         <ListItemIcon>
                             <PlaceIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
-                        <ListItemText primary="Add Place" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'DeletePlace'}
-                        onClick={() => onMenuItemClick('DeletePlace')}
-                        
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <PlaceIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Delete Place" sx={{ color: '#fff' }} />
+                        <ListItemText primary="Place" sx={{ color: '#fff' }} />
                     </ListItem>
                     <ListItem button selected={selectedMenuItem === 'category'}
                         onClick={() => onMenuItemClick('category')}
@@ -119,37 +97,13 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         </ListItemIcon>
                         <ListItemText primary="Category" sx={{ color: '#fff' }} />
                     </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'DeleteCategory'}
-                        onClick={() => onMenuItemClick('DeleteCategory')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <CategoryIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Delete Category" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'UpdateCategory'}
-                        onClick={() => onMenuItemClick('UpdateCategory')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <CategoryIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Update Category" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'AddIsland'}
-                        onClick={() => onMenuItemClick('AddIsland')}
+                    <ListItem button selected={selectedMenuItem === 'Island'}
+                        onClick={() => onMenuItemClick('Island')}
                         sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
                         <ListItemIcon>
                             <BeachAccessIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
-                        <ListItemText primary="Add Island" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'DeleteIsland'}
-                        onClick={() => onMenuItemClick('DeleteIsland')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <BeachAccessIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Delete Island" sx={{ color: '#fff' }} />
+                        <ListItemText primary="Island" sx={{ color: '#fff' }} />
                     </ListItem>
                     <ListItem button selected={selectedMenuItem === 'services'}
                         onClick={() => onMenuItemClick('services')}
