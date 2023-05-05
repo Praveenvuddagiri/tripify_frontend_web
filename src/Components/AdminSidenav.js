@@ -13,6 +13,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import Box from '@mui/material/Box';
 import CategoryHome from './Categories/CategoryHome';
 import IslandHome from './Islands/IslandHome';
+import TouristListPage from './Tourists/TouristListPage';
 
 
 const drawerWidth = 240;
@@ -33,8 +34,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
              return <IslandHome />;
         //   case 'services':
         //     return <Services />;
-        //   case 'tourists':
-        //     return <Tourists />;
+          case 'tourists':
+            return <TouristListPage />;
         //   case 'serviceProviders':
         //     return <ServiceProviders />;
         //   case 'approvals':

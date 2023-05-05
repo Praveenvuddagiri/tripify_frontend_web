@@ -11,3 +11,4 @@ export const deleteUpdateCategory = "api/v1/category";
 export const addIslandAPI = "api/v1/island/add";
 export const getAllIslands = "api/v1/island/all";
 export const deleteUpdateIsland = "api/v1/island";
+export const getAllTourists = "api/v1/admin/users";
