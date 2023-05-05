@@ -17,6 +17,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 // import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from '@mui/material/Box';
 import DeleteIsland from './Islands/DeleteIsland';
+import CategoryHome from './Categories/CategoryHome';
 
 
 const drawerWidth = 240;
@@ -33,8 +34,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
              return <AddPlace />;
              case 'DeletePlace':
                 return <DeletePlace />;  
-          case 'AddCategory':
-            return <AddCategoryForm />;
+          case 'category':
+            return <CategoryHome />;
             case 'DeleteCategory':
                 return <DeleteCategory />;
             case 'UpdateCategory':
@@ -110,13 +111,13 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         </ListItemIcon>
                         <ListItemText primary="Delete Place" sx={{ color: '#fff' }} />
                     </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'AddCategory'}
-                        onClick={() => onMenuItemClick('AddCategory')}
+                    <ListItem button selected={selectedMenuItem === 'category'}
+                        onClick={() => onMenuItemClick('category')}
                         sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
                         <ListItemIcon>
                             <CategoryIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
-                        <ListItemText primary="Add Category" sx={{ color: '#fff' }} />
+                        <ListItemText primary="Category" sx={{ color: '#fff' }} />
                     </ListItem>
                     <ListItem button selected={selectedMenuItem === 'DeleteCategory'}
                         onClick={() => onMenuItemClick('DeleteCategory')}

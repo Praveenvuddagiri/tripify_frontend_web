@@ -6,3 +6,5 @@ export const forgotPasswordAPI = "api/v1/forgotpassword";
 export const OtpSubmitAPI = "api/v1/verify/otp";
 export const OtpRegenerateAPI = "api/v1/regenerate/otp";
 export const addCategoryAPI = "api/v1/category/add";
+export const getAllCategories = "api/v1/category/all";
+export const deleteUpdateCategory = "api/v1/category";
