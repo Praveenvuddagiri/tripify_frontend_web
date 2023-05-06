@@ -13,6 +13,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import Box from '@mui/material/Box';
 import CategoryHome from './Categories/CategoryHome';
 import IslandHome from './Islands/IslandHome';
+import ServiceHome from './Services/ServiceHome';
 import TouristListPage from './Tourists/TouristListPage';
 
 
@@ -32,8 +33,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
             return <CategoryHome />;
            case 'Island':
              return <IslandHome />;
-        //   case 'services':
-        //     return <Services />;
+          case 'services':
+            return <ServiceHome />;
           case 'tourists':
             return <TouristListPage />;
         //   case 'serviceProviders':
