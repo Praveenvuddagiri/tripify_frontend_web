@@ -11,14 +11,14 @@ import axios from 'axios';
 import { baseAPI, deleteUpdateService } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function ServiceCard({ Service, setError, handleClick, fetchData, jumpToTab }) {
+function ServiceCard({ service, setError, handleClick, fetchData, jumpToTab }) {
 
     const [deleteLoader, setDeletLoader] = React.useState(false);
 
     const handleDelete = async () => {
         try {
             setDeletLoader(true);
-            await axios.delete(`${baseAPI}${deleteUpdateService}/${Service._id.toString()}`, {
+            await axios.delete(`${baseAPI}${deleteUpdateService}/${service._id.toString()}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -29,7 +29,7 @@ function ServiceCard({ Service, setError, handleClick, fetchData, jumpToTab }) {
 
             let successAlert = {
                 errorType: 'success',
-                message: "Service has been successfully deleted"
+                message: "service has been successfully deleted"
             }
 
             setError(successAlert);
@@ -58,7 +58,7 @@ function ServiceCard({ Service, setError, handleClick, fetchData, jumpToTab }) {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        localStorage.setItem('Service',JSON.stringify(Service));
+        localStorage.setItem('Service',JSON.stringify(service));
 
         jumpToTab(2);
     }
@@ -67,16 +67,16 @@ function ServiceCard({ Service, setError, handleClick, fetchData, jumpToTab }) {
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 sx={{ height: 140 }}
-                image={Service.image.secure_url}
-                title={Service.image.id}
+                image={service.image.secure_url}
+                title={service.image.id}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {Service.name}
+                    {service.name}
                 </Typography>
                 <div style={{ height: "100px", overflow: "auto" }}>
                     <Typography variant="body1" color="text.secondary">
-                        {Service.description}
+                        {service.description}
                     </Typography>
                 </div>
             </CardContent>

@@ -75,11 +75,11 @@ function AllServices({ jumpToTab }) {
       </Box>}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {
-          services.map((Service) =>
-            <Grid item xs={2} sm={4} md={3} mb={3} key={services._id}>
+          services.map((service) =>
+            <Grid item xs={2} sm={4} md={3} mb={3} key={service._id}>
               <div>
                 <ServiceCard
-                  services={services}
+                  service={service}
                   setError={setError}
                   handleClick={handleClick}
                   fetchData={fetchData}
