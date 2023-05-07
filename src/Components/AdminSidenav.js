@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import CategoryHome from './Categories/CategoryHome';
 import IslandHome from './Islands/IslandHome';
 import ServiceHome from './Services/ServiceHome';
+import PlaceHome from './Places/PlaceHome';
 import TouristListPage from './Tourists/TouristListPage';
 
 
@@ -28,7 +29,7 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         //   case 'analytics':
         //     return <analytics />;
            case 'Place':
-             return <AddPlace />; 
+             return <PlaceHome />; 
           case 'category':
             return <CategoryHome />;
            case 'Island':

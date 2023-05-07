@@ -24,7 +24,7 @@ import {
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import { addPlaceAPI, baseAPI, getAllCategories, getAllIslands } from "../../GlobalConstants";
+import { addPlaceAPI, baseAPI, deleteUpdatePlace, getAllCategories, getAllIslands } from "../../GlobalConstants";
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
 
@@ -66,7 +66,7 @@ const initialState = {
 };
 
 
-const AddPlace = () => {
+const UpdatePlaceForm = ({ jumpToTab })=>{
   const [formValues, setFormValues] = useState(initialState);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -74,6 +74,17 @@ const AddPlace = () => {
   const [islands, setIslands] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+      if (!localStorage.getItem('formValues')) {
+          jumpToTab(0);
+      }
+      else{
+          formValues = JSON.parse(localStorage.getItem('formValues'));
+          
+      }
+      
+  }, [])
 
 
   const handleClick = () => {
@@ -167,7 +178,7 @@ const AddPlace = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post(`${baseAPI}${addPlaceAPI}`, {
+        await axios.put(`${baseAPI}${deleteUpdatePlace}/${placeId}`, {
         formValues
       }, {
         headers: {
@@ -1131,4 +1142,4 @@ const AddPlace = () => {
   );
 };
 
-export default AddPlace;
+export default UpdatePlaceForm;
