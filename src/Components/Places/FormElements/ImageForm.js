@@ -3,9 +3,9 @@ import { useState } from "react";
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
-function ImageForm({ formValues, setFormValues, setError, handleClick }) {
+function ImageForm({ formValues, setFormValues, setError, handleClick, imagePreview, setImagePreview}) {
 
-  const [imagePreview, setImagePreview] = useState([]);
+  
     // images 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);

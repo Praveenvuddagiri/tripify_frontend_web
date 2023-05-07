@@ -20,7 +20,8 @@ function AllPlaces({ jumpToTab }) {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       });
 
@@ -46,7 +47,7 @@ function AllPlaces({ jumpToTab }) {
   }
 
   useEffect(() => {
-    localStorage.removeItem('Place');
+    localStorage.removeItem('place');
     setIsLoading(true);
 
     fetchData();

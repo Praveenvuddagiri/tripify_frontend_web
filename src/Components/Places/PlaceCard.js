@@ -11,7 +11,7 @@ import axios from 'axios';
 import { baseAPI, deleteUpdatePlace } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function PlaeCard({ place, setError, handleClick, fetchData, jumpToTab }) {
+function PlaceCard({ place, setError, handleClick, fetchData, jumpToTab }) {
 
     const [deleteLoader, setDeletLoader] = React.useState(false);
 
@@ -67,8 +67,8 @@ function PlaeCard({ place, setError, handleClick, fetchData, jumpToTab }) {
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 sx={{ height: 140 }}
-                image={place.image.secure_url}
-                title={place.image.id}
+                image={place.images[0].secure_url}
+                title={place.images[0].id}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

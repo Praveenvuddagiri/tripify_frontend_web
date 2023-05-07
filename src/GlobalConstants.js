@@ -15,6 +15,6 @@ export const getAllTourists = "api/v1/admin/users";
 export const addServiceAPI = "api/v1/service/add";
 export const getAllServices = "api/v1/service/all";
 export const deleteUpdateService = "api/v1/service";
-export const getAllPlaces = "api/v1/place/all";
+export const getAllPlaces = "api/v1/admin/place/all";
 export const addPlaceAPI = "api/v1/place/add";
 export const deleteUpdatePlace = "api/v1/place";

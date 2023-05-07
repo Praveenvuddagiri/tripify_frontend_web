@@ -72,6 +72,7 @@ const AddPlace = () => {
   const [categories, setCategories] = useState([]);
   const [islands, setIslands] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState([]);
 
 
   const handleClick = () => {
@@ -392,6 +393,8 @@ const AddPlace = () => {
                    setFormValues={setFormValues}
                    setError={setError}
                    handleClick={handleClick}
+                   imagePreview={imagePreview}
+                   setImagePreview={setImagePreview}
                   />     
 
 
