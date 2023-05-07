@@ -387,7 +387,35 @@ const AddPlace = () => {
     }));
   };
 
+  // handle url change
+  const handleUrlChange = (event) => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      url: event.target.value,
+    }));
+  };
 
+  // handle get coordinates button click
+  const handleGetCoordinatesClick = () => {
+    const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
+    const match = formValues.url.match(regex);
+    if (match) {
+      const latitude = match[1];
+      const longitude = match[2];
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        location: {
+          ...prevFormValues.location,
+          coordinates: [longitude, latitude],
+        },
+        isCoordinatesDisabled: true,
+      }));
+    } else {
+      const e = { errorType: 'error', message: 'Invalid URL' }
+      setError(e);
+      handleClick();
+    }
+  };
 
   //load categories and islands
 
@@ -1009,10 +1037,31 @@ const AddPlace = () => {
 
 
                   {/* location  */}
-                  <Box sx={{ mt: 2, ml: 2 }} >
+                  <Box sx={{ mt: 2, ml: 2 }}>
                     <Typography variant="h6">Location</Typography>
                     <Grid container spacing={2} alignItems="center">
-                      <Grid item xs={12} sm={12} style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Grid item xs={12} sm={12} style={{ display: "flex", flexDirection: "row" }}>
+                        <Box sx={{ mt: 2, mr: 3, width: '65%' }} >
+                          <TextField
+                            fullWidth
+                            label="URL"
+                            name="url"
+                            value={formValues.url}
+                            onChange={handleUrlChange}
+                            type="text"
+                            required
+                          />
+                        </Box>
+                        <Box sx={{ mt: 3 }}>
+                          <Button
+                            variant="outlined"
+                            onClick={handleGetCoordinatesClick}
+                          >
+                            Get Coordinates
+                          </Button>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={12} style={{ display: "flex", flexDirection: "row" }}>
                         <Box sx={{ mt: 2, mr: 3 }}>
                           <TextField
                             label="Longitude"
@@ -1021,6 +1070,7 @@ const AddPlace = () => {
                             onChange={handleLocationChange}
                             type="number"
                             required
+                            disabled
                           />
                         </Box>
                         <Box sx={{ mt: 2 }}>
@@ -1031,12 +1081,14 @@ const AddPlace = () => {
                             onChange={handleLocationChange}
                             type="number"
                             required
+                            disabled
                           />
-
                         </Box>
                       </Grid>
+                      
                     </Grid>
                   </Box>
+
 
                   <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     {isLoading ?
