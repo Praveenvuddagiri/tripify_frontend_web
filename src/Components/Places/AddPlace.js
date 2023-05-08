@@ -40,7 +40,7 @@ const initialState = {
       ""
     ]
   },
-  address: { street: '', city: '', state: 'Andman and Nicobar Islands', zip: '', country: 'India' },
+  address: { street: '', landmark: '', city: '', state: 'Andman and Nicobar Islands', zip: '', country: 'India' },
   island: '',
   activities: [],
   categories: [],
@@ -120,11 +120,11 @@ const AddPlace = () => {
     setIsLoading(true);
     var data = JSON.stringify(formValues);
     var images = formValues.images
-    
+
     try {
       await axios.post(`${baseAPI}${addPlaceAPI}`, {
         "images": images,
-         data
+        data
       }, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -256,11 +256,11 @@ const AddPlace = () => {
                     />
                   </Grid>
                   {/* entry and entry costs */}
-                  <EntryCostForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <EntryCostForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* how to reach */}
                   <Grid item xs={12}>
@@ -280,13 +280,24 @@ const AddPlace = () => {
                   <Box sx={{ mt: 2, ml: 2 }}>
                     <Typography variant="h6">Address</Typography>
                     <Grid container spacing={2}>
-                      <Grid item xs={12} sm={12}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           id="street"
                           name="street"
                           label="Street"
                           required
                           value={formValues.address.street}
+                          onChange={handleAddressChange}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          id="landmark"
+                          name="landmark"
+                          label="landmark"
+                          required
+                          value={formValues.address.landmark}
                           onChange={handleAddressChange}
                           fullWidth
                         />
@@ -338,72 +349,72 @@ const AddPlace = () => {
                     </Grid>
                   </Box>
                   {/* activites */}
-                  <ActivitiesForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <ActivitiesForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
                   {/* do's and don'ts */}
-                  <DosAndDontsForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <DosAndDontsForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* external links */}
-                  <ExternalLinksForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <ExternalLinksForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* best time to visit */}
-                  <BestTimeToVisitForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <BestTimeToVisitForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* island  */}
-                  <IslandForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   islands={islands}
-                   />       
+                  <IslandForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    islands={islands}
+                  />
 
                   {/* categories  */}
-                  <CategoryForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   categories={categories}
-                   />
+                  <CategoryForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    categories={categories}
+                  />
 
                   {/* timings */}
 
-                  <TimingForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}/>
+                  <TimingForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick} />
 
                   {/* images */}
                   <ImageForm
-                   formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   imagePreview={imagePreview}
-                   setImagePreview={setImagePreview}
-                  />     
+                    formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    imagePreview={imagePreview}
+                    setImagePreview={setImagePreview}
+                  />
 
 
                   {/* location  */}
                   <LocationForm
-                   formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
+                    formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
                   />
 
 

@@ -1,4 +1,4 @@
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
 
 function TimingForm({ formValues, setFormValues, setError, handleClick }) {
@@ -28,6 +28,30 @@ function TimingForm({ formValues, setFormValues, setError, handleClick }) {
         }
         return options;
     };
+
+    const handleSameAsMonday = () => {
+        var newTime = [];
+        var open = formValues.timings[0].open_time;
+        var close = formValues.timings[0].close_time;
+        newTime = formValues.timings.map((time, index) => {
+            if(index!==0){
+                return {
+                    day: time.day,
+                    open_time: open,
+                    close_time: close
+                }
+            }
+        })
+
+        newTime = [{day: 'Monday', open_time: open, close_time: close}, ...newTime]
+        newTime.splice(1,1);
+
+        setFormValues( (prevFormValues) =>({
+            ...prevFormValues,
+            timings: newTime
+        }))
+
+    }
 
 
     return (
@@ -69,8 +93,25 @@ function TimingForm({ formValues, setFormValues, setError, handleClick }) {
                                 </Select>
                             </FormControl>
                         </Grid>
+
+                        {
+                        timing.day === "Monday"?
+                        <Grid item xs={12} sm={10}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                <Button
+                                    variant="outlined"
+                                    onClick={handleSameAsMonday}
+                                >
+                                    Same as Monday
+                                </Button>
+                            </Box>
+                            </Grid>
+                            : <></>
+                        }
                     </React.Fragment>
-                ))}
+
+                ))
+                }
             </Grid>
         </Box>
     );

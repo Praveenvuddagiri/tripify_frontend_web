@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import AddPlace from './AddPlace';
 import AllPlaces from './AllPlaces';
 import UpdatePlaceForm from './UpdatePlaceForm';
+import ViewPlace from './ViewPlace';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,6 +61,7 @@ export default function PlaceHome() {
           <Tab label="Places" {...a11yProps(0)} />
           <Tab label="Add Place" {...a11yProps(1)} />
           <Tab label="Update Place" {...a11yProps(2)} />
+          <Tab label="View Place" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -70,6 +72,9 @@ export default function PlaceHome() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <UpdatePlaceForm jumpToTab={jumpToTab}/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <ViewPlace jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );

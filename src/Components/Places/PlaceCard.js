@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { baseAPI, deleteUpdatePlace } from '../../GlobalConstants';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { LoadingButton } from '@mui/lab';
 
 function PlaceCard({ place, setError, handleClick, fetchData, jumpToTab }) {
@@ -63,6 +64,14 @@ function PlaceCard({ place, setError, handleClick, fetchData, jumpToTab }) {
         jumpToTab(2);
     }
 
+
+    const handleView = (e) => {
+        e.preventDefault();
+        localStorage.setItem('place',JSON.stringify(place));
+
+        jumpToTab(3);
+    }
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
@@ -103,6 +112,10 @@ function PlaceCard({ place, setError, handleClick, fetchData, jumpToTab }) {
 
                 <Button variant="contained" color='info' endIcon={<EditIcon />} size='small' onClick={handleUpdate}>
                     Update
+                </Button>
+
+                <Button variant="contained" color='success' startIcon={<RemoveRedEyeIcon />} size='small' onClick={handleView}>
+                    View
                 </Button>
             </CardActions>
         </Card>
