@@ -13,7 +13,7 @@ import {
   Alert
 } from '@mui/material';
 
-import { addPlaceAPI, baseAPI, getAllCategories, getAllIslands } from "../../GlobalConstants";
+import { addPlaceAPI, baseAPI, deleteUpdatePlace, getAllCategories, getAllIslands } from "../../GlobalConstants";
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
 import LocationForm from './FormElements/LocationForm';
@@ -140,8 +140,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
     var images = formValues.images
     
     try {
-      await axios.post(`${baseAPI}${addPlaceAPI}`, {
-        "images": images,
+      await axios.post(`${baseAPI}${deleteUpdatePlace}/${place._id.toString()}`, {
          data
       }, {
         headers: {
@@ -179,7 +178,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
   }
 
 
-  const fetchIslandData = async () => {
+  const fetchIslandData = async () => { 
     try {
       const response = await axios.get(`${baseAPI}${getAllIslands}`, {
         headers: {
