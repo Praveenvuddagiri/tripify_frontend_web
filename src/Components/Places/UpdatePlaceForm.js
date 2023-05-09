@@ -136,15 +136,15 @@ const UpdatePlaceForm = ({jumpToTab}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    var data = JSON.stringify(formValues);
+    var data = formValues;
     var images = formValues.images
     
     try {
-      await axios.post(`${baseAPI}${deleteUpdatePlace}/${place._id.toString()}`, {
+      var response = await axios.put(`${baseAPI}${deleteUpdatePlace}/${formValues._id.toString()}`, {
          data
       }, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
           "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -157,6 +157,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
 
       setError(successAlert);
       handleClick();
+      console.log(response);
 
     } catch (error) {
 
@@ -166,6 +167,9 @@ const UpdatePlaceForm = ({jumpToTab}) => {
       } else {
         error.response.data.errorType = 'error';
       }
+
+
+      
 
       setError(error.response.data);
       handleClick();
@@ -443,7 +447,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
                         color="primary"
                         fullWidth
                       >
-                        Add Place
+                        Update Place
                       </Button>
 
                     }

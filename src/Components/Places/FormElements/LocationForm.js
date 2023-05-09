@@ -54,7 +54,6 @@ function LocationForm({ formValues, setFormValues, setError, handleClick }) {
                             type="text"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            required
                         />
                     </Box>
                     <Box sx={{ mt: 3 }}>
