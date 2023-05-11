@@ -4,10 +4,12 @@ import Header from './Header';
 import '../CSS/AdminHome.css';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
- 
+import ServiceProviderSidenav from './ServiceProviderSidenav';
+
 function Home() {
   const navigate = useNavigate();
-  const [selectedMenuItem, setSelectedMenuItem] = useState('analytics');
+  const [selectedMenuItem, setSelectedMenuItem] = useState('Place');
+  var userRole;
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
@@ -30,6 +32,8 @@ function Home() {
 
     checkTokenExpiry();
 
+    userRole = JSON.parse(localStorage.getItem('user')).role;
+
   }, [])
 
 
@@ -38,10 +42,20 @@ function Home() {
     <div className="home-container">
       <Header />
       <div className="admin-container">
-        <AdminSidenav
-          selectedMenuItem={selectedMenuItem}
-          onMenuItemClick={handleMenuItemClick}
-        />
+
+        {
+          userRole === 'admin' ?
+            <AdminSidenav
+              selectedMenuItem={selectedMenuItem}
+              onMenuItemClick={handleMenuItemClick}
+            />
+            :
+            <ServiceProviderSidenav
+              selectedMenuItem={selectedMenuItem}
+              onMenuItemClick={handleMenuItemClick}
+            />
+        }
+
       </div>
     </div>
   );

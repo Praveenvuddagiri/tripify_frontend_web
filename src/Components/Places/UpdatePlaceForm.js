@@ -10,7 +10,8 @@ import {
   Card,
   CardContent,
   Snackbar,
-  Alert
+  Alert,
+  Modal
 } from '@mui/material';
 
 import { addPlaceAPI, baseAPI, deleteUpdatePlace, getAllCategories, getAllIslands } from "../../GlobalConstants";
@@ -26,6 +27,7 @@ import ExternalLinksForm from './FormElements/ExternalLinksForm';
 import DosAndDontsForm from './FormElements/DosAndDontsForm';
 import ActivitiesForm from './FormElements/ActivitiesForm';
 import EntryCostForm from './FormElements/EntryCostForm';
+import UpdateImagesForm from './FormElements/UpdateImagesForm';
 
 const initialState = {
   name: '',
@@ -65,14 +67,15 @@ const initialState = {
 };
 
 
-const UpdatePlaceForm = ({jumpToTab}) => {
+const UpdatePlaceForm = ({ jumpToTab }) => {
   const [formValues, setFormValues] = useState(initialState);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [islands, setIslands] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState([]);
+  
+  const [openModal, setOpenModal] = useState(false);
 
 
   const handleClick = () => {
@@ -89,20 +92,20 @@ const UpdatePlaceForm = ({jumpToTab}) => {
 
   useEffect(() => {
     if (!localStorage.getItem('place')) {
-        jumpToTab(0);
+      jumpToTab(0);
     }
-    else{
-        place = JSON.parse(localStorage.getItem('place'));
-        if(!place.bestTimeToVisit){
-          place.bestTimeToVisit = {
-            startMonth: 'January',
-            endMonth: 'December'
-          }
+    else {
+      place = JSON.parse(localStorage.getItem('place'));
+      if (!place.bestTimeToVisit) {
+        place.bestTimeToVisit = {
+          startMonth: 'January',
+          endMonth: 'December'
         }
-        setFormValues(place)
+      }
+      setFormValues(place)
     }
-    
-}, [])
+
+  }, [])
 
   //should be removed later
   useEffect(() => {
@@ -136,12 +139,11 @@ const UpdatePlaceForm = ({jumpToTab}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    var data = formValues;
-    var images = formValues.images
-    
+    var data = formValues; 
+
     try {
       var response = await axios.put(`${baseAPI}${deleteUpdatePlace}/${formValues._id.toString()}`, {
-         data
+        data
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +154,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
       });
       let successAlert = {
         errorType: 'success',
-        message: "Island has been successfully added"
+        message: "Place has been successfully updated."
       }
 
       setError(successAlert);
@@ -169,7 +171,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
       }
 
 
-      
+
 
       setError(error.response.data);
       handleClick();
@@ -182,7 +184,7 @@ const UpdatePlaceForm = ({jumpToTab}) => {
   }
 
 
-  const fetchIslandData = async () => { 
+  const fetchIslandData = async () => {
     try {
       const response = await axios.get(`${baseAPI}${getAllIslands}`, {
         headers: {
@@ -277,11 +279,11 @@ const UpdatePlaceForm = ({jumpToTab}) => {
                     />
                   </Grid>
                   {/* entry and entry costs */}
-                  <EntryCostForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <EntryCostForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* how to reach */}
                   <Grid item xs={12}>
@@ -359,72 +361,87 @@ const UpdatePlaceForm = ({jumpToTab}) => {
                     </Grid>
                   </Box>
                   {/* activites */}
-                  <ActivitiesForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <ActivitiesForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
                   {/* do's and don'ts */}
-                  <DosAndDontsForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <DosAndDontsForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* external links */}
-                  <ExternalLinksForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <ExternalLinksForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* best time to visit */}
-                  <BestTimeToVisitForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   /> 
+                  <BestTimeToVisitForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                  />
 
                   {/* island  */}
-                  <IslandForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   islands={islands}
-                   />       
+                  <IslandForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    islands={islands}
+                  />
 
                   {/* categories  */}
-                  <CategoryForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   categories={categories}
-                   />
+                  <CategoryForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    categories={categories}
+                  />
 
                   {/* timings */}
 
-                  <TimingForm formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}/>
+                  <TimingForm formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick} />
+
+
+
+                  <div style={{marginTop:20, marginLeft:20}}>
+                    <Button variant='contained' onClick={() => setOpenModal(true)}>Open Image Update Form</Button>
+                    <Modal open={openModal} onClose={() => setOpenModal(false)}>
+                      <UpdateImagesForm
+                        formValues={formValues}
+                        setFormValues={setFormValues}
+                        setError={setError}
+                        handleClick={handleClick}
+                        setOpenModal={setOpenModal}
+                      />
+                    </Modal>
+                  </div>
 
                   {/* images */}
-                  <ImageForm
-                   formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
-                   imagePreview={imagePreview}
-                   setImagePreview={setImagePreview}
-                  />     
+                  {/* <ImageForm
+                    formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
+                    imagePreview={imagePreview}
+                    setImagePreview={setImagePreview}
+                  /> */}
 
 
                   {/* location  */}
                   <LocationForm
-                   formValues={formValues} 
-                   setFormValues={setFormValues}
-                   setError={setError}
-                   handleClick={handleClick}
+                    formValues={formValues}
+                    setFormValues={setFormValues}
+                    setError={setError}
+                    handleClick={handleClick}
                   />
 
 
