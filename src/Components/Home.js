@@ -9,7 +9,7 @@ import ServiceProviderSidenav from './ServiceProviderSidenav';
 function Home() {
   const navigate = useNavigate();
   const [selectedMenuItem, setSelectedMenuItem] = useState('Place');
-  var userRole;
+  const [role,setRole] = useState('admin');
 
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
@@ -32,7 +32,7 @@ function Home() {
 
     checkTokenExpiry();
 
-    userRole = JSON.parse(localStorage.getItem('user')).role;
+    setRole(JSON.parse(localStorage.getItem('user')).role);
 
   }, [])
 
@@ -44,7 +44,7 @@ function Home() {
       <div className="admin-container">
 
         {
-          userRole === 'admin' ?
+          role === 'admin' ?
             <AdminSidenav
               selectedMenuItem={selectedMenuItem}
               onMenuItemClick={handleMenuItemClick}
