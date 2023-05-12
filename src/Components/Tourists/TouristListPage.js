@@ -56,19 +56,23 @@ const TouristListPage = () => {
     }
 
     useEffect(() => {
+        setIsLoading(true);
+
         fetchData();
     }, []);
 
     return (
         <>
-            {isLoading && <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-                <CircularProgress />
-            </Box>}
+
             <Box display="flex" flexDirection='column' justifyContent="center" alignItems="center" marginTop='15px'>
                 <Typography variant="h4" align="center" gutterBottom>
                     Tourists
                 </Typography>
                 <TouristsTable tourists={tourists} />
+
+                {isLoading && <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+                    <CircularProgress />
+                </Box>}
             </Box>
 
             {error && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

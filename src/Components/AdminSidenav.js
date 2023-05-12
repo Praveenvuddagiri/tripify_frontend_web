@@ -16,6 +16,7 @@ import IslandHome from './Islands/IslandHome';
 import ServiceHome from './Services/ServiceHome';
 import PlaceHome from './Places/PlaceHome';
 import TouristListPage from './Tourists/TouristListPage';
+import ApprovalHome from './Approvals/ApprovalHome';
 
 
 const drawerWidth = 240;
@@ -40,8 +41,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
             return <TouristListPage />;
         //   case 'serviceProviders':
         //     return <ServiceProviders />;
-        //   case 'approvals':
-        //     return <Approvals />;
+          case 'approvals':
+            return <ApprovalHome />;
         //   case 'feedbacks':
         //     return <Feedbacks />;
           default:

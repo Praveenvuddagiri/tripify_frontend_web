@@ -19,3 +19,10 @@ export const deleteUpdateService = "api/v1/service";
 export const getAllPlaces = "api/v1/admin/place/all";
 export const addPlaceAPI = "api/v1/admin/place/add";
 export const deleteUpdatePlace = "api/v1/admin/place";
+export const getAllHotelsAdmin = "api/v1/admin/hotel/all";
+export const getOneIslandDetailsUsingId = "api/v1/island";
+export const approveHotelAdmin = "api/v1/admin/hotel/approve";
+export const unapproveHotelAdmin = "api/v1/admin/hotel/unapprove";
+
+
+
