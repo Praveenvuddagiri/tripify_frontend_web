@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import HotelIcon from '@mui/icons-material/Hotel';
-import CategoryIcon from '@mui/icons-material/Category';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
 import PeopleIcon from '@mui/icons-material/People';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -10,12 +8,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 // import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from '@mui/material/Box';
-import CategoryHome from './Categories/CategoryHome';
-import IslandHome from './Islands/IslandHome';
 import ServiceHome from './Services/ServiceHome';
-import PlaceHome from './Places/PlaceHome';
 import TouristListPage from './Tourists/TouristListPage';
-
+import TourIcon from '@mui/icons-material/Tour';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import HotelHome from './Hotels/HotelHome';
+import TourOperatorHome from './TourOperators/TourOperatorHome';
+import RestaurantHome from './Restaurants/RestaurantHome';
 
 const drawerWidth = 240;
 
@@ -28,11 +27,11 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         //   case 'analytics':
         //     return <analytics />;
            case 'Hotel':
-             return <PlaceHome />; 
-          case 'category':
-            return <CategoryHome />;
-           case 'Island':
-             return <IslandHome />;
+             return <HotelHome />; 
+          case 'TourOperator':
+            return <TourOperatorHome />;
+           case 'Restaurant':
+             return <RestaurantHome />;
           case 'services':
             return <ServiceHome />;
           case 'tourists':
@@ -91,21 +90,21 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         </ListItemIcon>
                         <ListItemText primary="Hotel" sx={{ color: '#fff' }} />
                     </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'category'}
-                        onClick={() => onMenuItemClick('category')}
+                    <ListItem button selected={selectedMenuItem === 'TourOperator'}
+                        onClick={() => onMenuItemClick('TourOperator')}
                         sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
                         <ListItemIcon>
-                            <CategoryIcon sx={{ color: '#fff' }} />
+                            <TourIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
-                        <ListItemText primary="Category" sx={{ color: '#fff' }} />
+                        <ListItemText primary="Tour Operator" sx={{ color: '#fff' }} />
                     </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'Island'}
-                        onClick={() => onMenuItemClick('Island')}
+                    <ListItem button selected={selectedMenuItem === 'Restaurant'}
+                        onClick={() => onMenuItemClick('Restaurant')}
                         sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
                         <ListItemIcon>
-                            <BeachAccessIcon sx={{ color: '#fff' }} />
+                            <RestaurantIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
-                        <ListItemText primary="Island" sx={{ color: '#fff' }} />
+                        <ListItemText primary="Restaurant" sx={{ color: '#fff' }} />
                     </ListItem>
                     <ListItem button selected={selectedMenuItem === 'services'}
                         onClick={() => onMenuItemClick('services')}

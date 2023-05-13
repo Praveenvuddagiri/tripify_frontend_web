@@ -23,6 +23,7 @@ export const getAllHotelsAdmin = "api/v1/admin/hotel/all";
 export const getOneIslandDetailsUsingId = "api/v1/island";
 export const approveHotelAdmin = "api/v1/admin/hotel/approve";
 export const unapproveHotelAdmin = "api/v1/admin/hotel/unapprove";
+export const getAllReviewsPerPlace = "api/v1/reviews";
 
 
 

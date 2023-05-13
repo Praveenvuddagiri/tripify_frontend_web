@@ -112,7 +112,7 @@ function HotelRecord({ hotel, fetchData, setError, handleClick, setIsLoading }) 
                     <b>{hotel.name}</b>
                 </TableCell>
                 <TableCell>
-                    <img src={hotel.images[0].secure_url} alt={`${hotel.name} photo`} style={{ width: '100px', borderRadius: '30%' }} />
+                    <img src={hotel.images[0].secure_url} alt={`${hotel.name} photo`} style={{ width: '100px', borderRadius: '40%' }} />
                 </TableCell>
                 <TableCell>
                     {hotel.island}

@@ -21,8 +21,9 @@ import {
     Paper
 } from '@mui/material';
 
-import { baseAPI, getAllCategories, getAllIslands } from "../../GlobalConstants";
+import { baseAPI, getAllCategories, getAllIslands, getAllReviewsPerPlace } from "../../GlobalConstants";
 import axios from 'axios';
+import ReviewsCard from './FormElements/ReviewCard';
 
 const initialState = {
     name: '',
@@ -62,14 +63,18 @@ const initialState = {
 };
 
 
+
+
 const ViewPlace = ({ jumpToTab }) => {
     const [formValues, setFormValues] = useState(initialState);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [islands, setIslands] = useState([]);
+    const [reviewsData, setReviewsData] = useState({});
     const [imagePreview, setImagePreview] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
 
 
     const handleClick = () => {
@@ -82,7 +87,7 @@ const ViewPlace = ({ jumpToTab }) => {
         }
         setOpen(false);
     };
-    var place = {images: []}
+    var place = { images: [] }
 
     useEffect(() => {
         if (!localStorage.getItem('place')) {
@@ -98,10 +103,14 @@ const ViewPlace = ({ jumpToTab }) => {
             }
             setFormValues(place)
         }
+        fetchRatingsData();
 
-        if(categories.length !== 0)
+        if (categories.length !== 0)
             setIsLoading(false)
+
+
         fetchCategoryData();
+        
         fetchIslandData();
 
         const imagesArray = place.images;
@@ -113,12 +122,14 @@ const ViewPlace = ({ jumpToTab }) => {
     //should be removed later
     useEffect(() => {
         console.log(formValues);
+        fetchRatingsData();
     }, [formValues])
 
     useEffect(() => {
-        if(categories.length !== 0)
+        if (categories.length !== 0)
             setIsLoading(false)
     }, [categories])
+
 
 
     const generateTimeOptions = () => {
@@ -129,6 +140,42 @@ const ViewPlace = ({ jumpToTab }) => {
         }
         return options;
     };
+
+    const fetchRatingsData = async () => {
+        try {
+            const response = await axios.get(`${baseAPI}${getAllReviewsPerPlace}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                },
+                params: {
+                    id: formValues._id.toString()
+                }
+            });
+
+            var data = response.data;
+            data.positivePercent = (data.positiveResponse / data.numberOfReviews) * 100;
+            data.negativePercent = (data.negativeResponse / data.numberOfReviews) * 100;
+            data.neutralPercent = (data.neutralResponse / data.numberOfReviews) * 100;
+
+            const ratingsData = [
+                { x: `One Star-(${data.oneCount})`, y: data.oneCount },
+                { x: `Two Star-(${data.twoCount})`, y: data.twoCount },
+                { x: `Three Star-(${data.threeCount})`, y: data.threeCount },
+                { x: `Four Star-(${data.fourCount})`, y: data.fourCount },
+                { x: `Five Star-(${data.fiveCount})`, y: data.fiveCount },
+            ];
+
+            data.ratingsData = ratingsData;
+
+            setReviewsData(data);
+
+            
+        } catch (error) {
+            
+        }
+    }
 
 
     const fetchIslandData = async () => {
@@ -190,7 +237,7 @@ const ViewPlace = ({ jumpToTab }) => {
 
     return (
         <>
-            <Container maxWidth="md">
+            <Container maxWidth="md" >
                 <Box mt={3}>
                     <Card>
                         <CardContent>
@@ -226,6 +273,54 @@ const ViewPlace = ({ jumpToTab }) => {
                                     />
                                 </Grid>
                                 {/* entry and entry costs */}
+                                <Grid item xs={12}>
+                                    <Box sx={{ display: "flex", alignItems: "center" }}>
+
+                                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                                            <InputLabel id="entry">Entry Paid</InputLabel>
+                                            <Select
+                                                labelId="entry"
+                                                id="entry"
+                                                name="entry"
+                                                label="Entry"
+                                                select
+                                                value={formValues.entry}
+                                                disabled
+                                            >
+                                                <MenuItem value={false}>No</MenuItem>
+                                                <MenuItem value={true}>Yes</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        {formValues.entry && (
+                                            <Box sx={{ marginLeft: "1rem" }}>
+
+                                                {formValues.entry_cost.map((cost, index) => (
+                                                    <Box key={index} sx={{ display: "flex", alignItems: "center", marginTop: '20px' }}>
+                                                        <TextField
+                                                            name="category"
+                                                            label="Category"
+                                                            required
+                                                            value={cost.category}
+                                                            disabled
+                                                            sx={{ marginLeft: "1rem" }}
+                                                        />
+                                                        <TextField
+                                                            name="cost"
+                                                            label="Cost"
+                                                            value={cost.cost}
+                                                            required
+                                                            disabled
+
+                                                            sx={{ marginLeft: "1rem" }}
+                                                        />
+                                                    </Box>
+                                                ))}
+                                            </Box>
+                                        )}
+                                    </Box>
+                                </Grid>
+
+
                                 <Grid item xs={12} sm={12}>
                                     <Typography variant="h6" gutterBottom>
                                         External Links
@@ -637,7 +732,7 @@ const ViewPlace = ({ jumpToTab }) => {
                                 <Box sx={{ mt: 2, ml: 2 }}>
                                     <Typography variant="h6">Location</Typography>
                                     <Grid container spacing={2} alignItems="center">
-                                        
+
                                         <Grid item xs={12} sm={12} style={{ display: "flex", flexDirection: "row" }}>
                                             <Box sx={{ mt: 2, mr: 3 }}>
                                                 <TextField
@@ -660,6 +755,17 @@ const ViewPlace = ({ jumpToTab }) => {
                                                 />
                                             </Box>
                                         </Grid>
+
+                                    </Grid>
+                                </Box>
+
+
+                                <Box sx={{ mt: 2, ml: 2 }}>
+                                    <Grid container spacing={2} alignItems="center">
+
+                                        <ReviewsCard
+                                            reviewsData={reviewsData}
+                                        />
 
                                     </Grid>
                                 </Box>
