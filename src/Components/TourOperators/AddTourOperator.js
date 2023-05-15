@@ -9,7 +9,12 @@ import {
     Typography,
     Container,
     Paper,
+    Snackbar,
+    Alert,
 } from '@mui/material';
+import { addTourOperatorByServiceProviderAPI, baseAPI } from '../../GlobalConstants';
+import axios from 'axios';
+import { LoadingButton } from '@mui/lab';
 
 const AddTourOperator = () => {
     const [company, setCompany] = useState({
@@ -32,6 +37,9 @@ const AddTourOperator = () => {
         governmentAuthorizedLicense: null
     });
     const [errors, setErrors] = useState({});
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -51,6 +59,17 @@ const AddTourOperator = () => {
             address: add
         }))
     }
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
 
     const handleContactChange = (e) => {
@@ -74,17 +93,52 @@ const AddTourOperator = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Perform validation here before submitting
+
+        setIsLoading(true);
+        var data = JSON.stringify(company);
+
+
         try {
-            const response = await fetch('/api/companies', {
-                method: 'POST',
-                body: new FormData(event.target),
+            await axios.post(`${baseAPI}${addTourOperatorByServiceProviderAPI}`, {
+                "image": company.image,
+                "governmentAuthorizedLicense": company.governmentAuthorizedLicense,
+                "tariffDocument": company.tariffDocument,
+                data
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
             });
-            const data = await response.json();
-            console.log('Response:', data);
+            let successAlert = {
+                errorType: 'success',
+                message: "Tour Operator has been successfully added"
+            }
+
+            setError(successAlert);
+            handleClick();
+
         } catch (error) {
-            console.error('Error:', error);
+
+            console.log(error);
+            if (Math.floor(error.response.status / 100) === 5) {
+                error.response.data.errorType = 'warning';
+            } else {
+                error.response.data.errorType = 'error';
+            }
+
+            setError(error.response.data);
+            handleClick();
+
+
         }
+        finally {
+            setIsLoading(false);
+        }
+
+
     };
     useEffect(() => {
         console.log(company);
@@ -302,7 +356,7 @@ const AddTourOperator = () => {
                             </Button>
                         </label>
                         {company.governmentAuthorizedLicense && (
-                            <Grid item xs={4} key={company.governmentAuthorizedLicense.name} mt={2}>
+                            <Grid item xs={7} key={company.governmentAuthorizedLicense.name} mt={2}>
                                 <Paper
                                     sx={{
                                         position: 'relative',
@@ -349,7 +403,7 @@ const AddTourOperator = () => {
                             </Button>
                         </label>
                         {company.tariffDocument && (
-                            <Grid item xs={4} key={company.tariffDocument.name} mt={2}>
+                            <Grid item xs={7} key={company.tariffDocument.name} mt={2}>
                                 <Paper
                                     sx={{
                                         position: 'relative',
@@ -373,14 +427,32 @@ const AddTourOperator = () => {
                         )}
                     </Grid>
 
+                    {isLoading ?
+                        <LoadingButton
+                            loading={isLoading}
+                            variant="contained"
+                            fullWidth
+                            disabled
+                            style={{ height: '40px' }}
+                        >
+                            <span>disabled</span>
+                        </LoadingButton>
+                        :
 
-                    <Grid item xs={12} >
-                        <Button type="submit" variant="contained" color="primary" fullWidth>
-                            Add company
-                        </Button>
-                    </Grid>
+
+                        <Grid item xs={12} >
+                            <Button type="submit" variant="contained" color="primary" fullWidth>
+                                Add company
+                            </Button>
+                        </Grid>
+                    }
                 </Grid>
             </Container>
+            {error && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={error.errorType} sx={{ width: '100%' }}>
+                    {error.message}
+                </Alert>
+            </Snackbar>}
         </form>
     );
 };

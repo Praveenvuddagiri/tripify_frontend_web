@@ -7,8 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import { Button } from '@mui/material';
+import { Email } from '@mui/icons-material';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const TouristTable = ({ tourists }) => {
+
+  
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '800px', margin: 'auto' }}>
       <Table aria-label="tourist table">
@@ -17,6 +23,7 @@ const TouristTable = ({ tourists }) => {
             <TableCell align="left">Avatar</TableCell>
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Email</TableCell>
+            <TableCell align="left">Contact</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -29,6 +36,17 @@ const TouristTable = ({ tourists }) => {
               </TableCell>
               <TableCell align="left">{tourist.name}</TableCell>
               <TableCell align="left">{tourist.email}</TableCell>
+              <TableCell align="left">
+                <Button
+                  href={`mailto:?to=${tourist.email}`}
+                  style={{ marginLeft: 20 }}
+                  startIcon={<Email />}
+                  variant="contained"
+                  color="primary"
+                >
+                  Contact
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

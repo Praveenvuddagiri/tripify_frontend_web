@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Icon from '@mdi/react';
-import { mdiSquareCircle } from '@mdi/js';
 import {
     TableCell,
     TableRow,
@@ -8,13 +6,14 @@ import {
     IconButton,
     Button
 } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 import { Check, Phone, Email, Language, Description } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { approveRestrauntAdmin, baseAPI, unapproveRestrauntAdmin } from '../../GlobalConstants';
+import { approveTourOperatorAdmin, baseAPI, unapproveTourOperatorAdmin } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLoading }) {
+function TourOperatorRecord({ touroperator, fetchData, setError, handleClick, setIsLoading }) {
 
     const [isApproving, setIsApproving] = useState(false);
     const [isUnapproving, setIsUnapproving] = useState(false);
@@ -22,7 +21,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     const handleApprove = async () => {
         setIsApproving(true);
         try {
-            await axios.put(`${baseAPI}${approveRestrauntAdmin}/${restaurant._id.toString()}`, {}, {
+            await axios.put(`${baseAPI}${approveTourOperatorAdmin}/${touroperator._id.toString()}`, {}, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -31,7 +30,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
             });
 
             const e = {
-                message: "Approved restaurant successfully.",
+                message: "Approved Tour Operator successfully.",
                 errorType: 'success'
             }
             setError(e)
@@ -66,7 +65,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     const handleUnapprove = async () => {
         setIsUnapproving(true);
         try {
-            await axios.put(`${baseAPI}${unapproveRestrauntAdmin}/${restaurant._id.toString()}`, {}, {
+            await axios.put(`${baseAPI}${unapproveTourOperatorAdmin}/${touroperator._id.toString()}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -76,7 +75,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
             });
 
             const e = {
-                message: "Unapproved restaurant successfully.",
+                message: "Unapproved Tour Operator successfully.",
                 errorType: 'success'
             }
             setError(e)
@@ -107,57 +106,54 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
             setIsUnapproving(false);
         }
     }
-    useEffect(
-        () =>{
-            console.log(restaurant);
-        },[]
-    )
     return (
         <>
-            <TableRow key={restaurant.name}>
+            <TableRow key={touroperator.name}>
                 <TableCell component="th" scope="row">
-                    <b>{restaurant.name}</b>
+                    <b>{touroperator.name}</b>
                 </TableCell>
                 <TableCell>
-                    <img src={restaurant.images[0].secure_url} alt={`${restaurant.name} photo`} style={{ width: '100px', borderRadius: '40%' }} />
+                    <img src={touroperator.image.secure_url} alt={`${touroperator.name} photo`} style={{ width: '100px', borderRadius: '40%' }} />
                 </TableCell>
-                <TableCell>
-                    {restaurant.island}
-                </TableCell>
-                <TableCell>
-                    {restaurant.isVeg? <Icon path={mdiSquareCircle} size={1} color="green"/>:<Icon path={mdiSquareCircle} size={1} color="red"/>}
-                </TableCell>
+                {/* <TableCell>
+                    {touroperator.island}
+                </TableCell> */}
                 <TableCell>
                     <Typography>
-                        {restaurant.address.street}, {restaurant.address.city}, {restaurant.address.zip}
+                        {touroperator.address.street}, {touroperator.address.city}, {touroperator.address.zip}
                     </Typography>
                 </TableCell>
                 <TableCell>
+                <Typography style={{minWidth:"350px", overflow:"clip"}}>
+                        <IconButton >
+                            <PersonIcon />
+                        </IconButton> {touroperator.contact.name}
+                    </Typography>
                     <Typography>
-                        <IconButton href={`tel:${restaurant.contact.phone}`} >
+                        <IconButton href={`tel:${touroperator.contact.phone}`} >
                             <Phone />
-                        </IconButton> {restaurant.contact.phone}
+                        </IconButton> {touroperator.contact.phone}
                     </Typography>
                     <Typography>
-                        <IconButton href={`mailto:${restaurant.contact.email}`}>
+                        <IconButton href={`mailto:${touroperator.contact.email}`}>
                             <Email />
-                        </IconButton> {restaurant.contact.email}
+                        </IconButton> {touroperator.contact.email}
                     </Typography>
                     <Typography>
-                        <IconButton href={restaurant.contact.website} target="_blank">
+                        <IconButton href={touroperator.contact.website} target="_blank">
                             <Language />
-                        </IconButton>{restaurant.contact.website}
+                        </IconButton>{touroperator.contact.website}
                     </Typography>
                 </TableCell>
 
                 <TableCell>
-                    <IconButton href={restaurant.governmentAuthorizedLicense.secure_url} target="_blank" >
+                    <IconButton href={touroperator.governmentAuthorizedLicense.secure_url} target="_blank" >
                         <Description style={{ fontSize: '40px' }} color='primary' />
                     </IconButton>
                 </TableCell>
                 <TableCell >
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        {restaurant.isApproved === true ?
+                        {touroperator.isApproved === true ?
 
                             (
                                 isUnapproving ?
@@ -199,7 +195,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
 
                         }
 
-                        <Button href={`mailto:?to=${restaurant.contact.email}`}
+                        <Button href={`mailto:?to=${touroperator.contact.email}`}
                             style={{ marginLeft: 20 }} startIcon={<Email />} variant="contained" color="primary">
                             Contact
                         </Button>
@@ -210,4 +206,4 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     );
 }
 
-export default RestrauntRecord;
+export default TourOperatorRecord;

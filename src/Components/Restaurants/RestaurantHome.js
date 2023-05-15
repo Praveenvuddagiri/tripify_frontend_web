@@ -1,6 +1,9 @@
+import AddRestuarant from "./AddRestaurant";
+
 function RestaurantHome() {
     return ( 
         <>
+        <AddRestuarant />
         </>
      );
 }

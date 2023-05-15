@@ -57,7 +57,7 @@ function HotelRecord({ hotel, fetchData, setError, handleClick, setIsLoading }) 
         }
         finally {
             setIsLoading(false);
-            setIsApproving(true);
+            setIsApproving(false);
         }
     }
 
@@ -102,7 +102,7 @@ function HotelRecord({ hotel, fetchData, setError, handleClick, setIsLoading }) 
         }
         finally {
             setIsLoading(false);
-            setIsUnapproving(true);
+            setIsUnapproving(false);
         }
     }
     return (

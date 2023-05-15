@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import { Button } from '@mui/material';
+import { Email } from '@mui/icons-material';
 
 const ServiceProvidersTable = ({ serviceproviders }) => {
   return (
@@ -17,6 +19,8 @@ const ServiceProvidersTable = ({ serviceproviders }) => {
             <TableCell align="left">Avatar</TableCell>
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Email</TableCell>
+            <TableCell align="left">Contact</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -29,6 +33,17 @@ const ServiceProvidersTable = ({ serviceproviders }) => {
               </TableCell>
               <TableCell align="left">{serviceprovider.name}</TableCell>
               <TableCell align="left">{serviceprovider.email}</TableCell>
+              <TableCell align="left">
+                <Button
+                  href={`mailto:?to=${serviceprovider.email}`}
+                  style={{ marginLeft: 20 }}
+                  startIcon={<Email />}
+                  variant="contained"
+                  color="primary"
+                >
+                  Contact
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

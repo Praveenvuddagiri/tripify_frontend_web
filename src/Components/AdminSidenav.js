@@ -49,7 +49,7 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         return <TouristListPage />;
       case "touroperators":
         return <TourOpearatorListPage />;
-      case "restraunts":
+      case "restaurants":
         return <TouristListPage />;
       case "serviceProviders":
         return <ServiceProviderListPage />;
@@ -183,14 +183,14 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
           </ListItem>
           <ListItem
             button
-            selected={selectedMenuItem === "restraunts"}
-            onClick={() => onMenuItemClick("restraunts")}
+            selected={selectedMenuItem === "restaurants"}
+            onClick={() => onMenuItemClick("restaurants")}
             sx={{ "&:hover": { backgroundColor: "#2F3E62" } }}
           >
             <ListItemIcon>
               <RestaurantIcon sx={{ color: "#fff" }} />
             </ListItemIcon>
-            <ListItemText primary="Restraunts" sx={{ color: "#fff" }} />
+            <ListItemText primary="Restaurants" sx={{ color: "#fff" }} />
           </ListItem>
           <ListItem
             button

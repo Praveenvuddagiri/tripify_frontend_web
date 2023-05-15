@@ -17,7 +17,7 @@ import axios from 'axios';
 import RestrauntRecord from './RestrauntRecord';
 
 function RestrauntApproval() {
-    const [restraunts, setRestraunts] = useState([]);
+    const [restaurants, setRestraunts] = useState([]);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -50,16 +50,16 @@ function RestrauntApproval() {
             });
 
 
-            var restrauntsUpdated = response.data.restraunts
+            var restrauntsUpdated = response.data.restaurants
             for (let i = 0; i < restrauntsUpdated.length; i++) {
-                const restraunt = restrauntsUpdated[i];
-                const islandName = await getIslandName(restraunt.island);
+                const restaurant = restrauntsUpdated[i];
+                const islandName = await getIslandName(restaurant.island);
                 restrauntsUpdated[i] = {
-                    ...restraunt,
+                    ...restaurant,
                     island: islandName
                 };
             }
-
+            console.log(response);
             setRestraunts(restrauntsUpdated);
 
         } catch (error) {
@@ -103,7 +103,7 @@ function RestrauntApproval() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Restraunt Name</TableCell>
+                            <TableCell>Restaurant Name</TableCell>
                             <TableCell>Photo</TableCell>
                             <TableCell>Island</TableCell>
                             <TableCell>Dietary Options</TableCell>
@@ -117,9 +117,9 @@ function RestrauntApproval() {
                         <CircularProgress />
                     </Box>}
                     <TableBody>
-                        {restraunts.map((restraunt) => (
+                        {restaurants.map((restaurant) => (
                             <RestrauntRecord
-                                restraunt={restraunt}
+                                restaurant={restaurant}
                                 fetchData={fetchData}
                                 handleClick={handleClick}
                                 setError={setError}
