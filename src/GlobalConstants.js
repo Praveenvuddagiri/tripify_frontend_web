@@ -24,6 +24,8 @@ export const getOneIslandDetailsUsingId = "api/v1/island";
 export const approveHotelAdmin = "api/v1/admin/hotel/approve";
 export const unapproveHotelAdmin = "api/v1/admin/hotel/unapprove";
 export const getAllReviewsPerPlace = "api/v1/reviews";
-
-
-
+export const getAllRestrauntsAdmin = "api/v1/admin/restraunt/all";
+export const approveRestrauntAdmin = "api/v1/admin/restraunt/approve";
+export const unapproveRestrauntAdmin = "api/v1/admin/restraunt/unapprove";
+export const getAllServiceProviders = "api/v1/admin/serviceproviders";
+export const getAllTourOperators = "api/v1/admin/touropertor/all";

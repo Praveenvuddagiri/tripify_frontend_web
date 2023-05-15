@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 // import Grid from '@mui/material/Grid';
-import TouristsTable from './TouristsTable';
+import TourOperatorTable from './TourOperatorTable';
 import { Alert, Box, CircularProgress, Snackbar, Typography } from '@mui/material';
-import { baseAPI, getAllTourists } from '../../GlobalConstants';
+import { baseAPI, getAllTourOperators } from '../../GlobalConstants';
 import axios from 'axios';
 
-const TouristListPage = () => {
+const TourOperatorListPage = () => {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [tourists, setTourists] = useState([]);
+    const [touroperators, setTourOperators] = useState([]);
 
     const handleClick = () => {
         setOpen(true);
@@ -25,7 +25,7 @@ const TouristListPage = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`${baseAPI}${getAllTourists}`, {
+            const response = await axios.get(`${baseAPI}${getAllTourOperators}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -34,7 +34,7 @@ const TouristListPage = () => {
                 }
             });
 
-            setTourists(response.data.users);
+            setTourOperators(response.data.users);
 
 
         } catch (error) {
@@ -66,9 +66,9 @@ const TouristListPage = () => {
 
             <Box display="flex" flexDirection='column' justifyContent="center" alignItems="center" marginTop='15px'>
                 <Typography variant="h4" align="center" gutterBottom>
-                    Tourists
+                Tour Operators
                 </Typography>
-                <TouristsTable tourists={tourists} />
+                <TourOperatorTable touroperators={touroperators} />
 
                 {isLoading && <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
                     <CircularProgress />
@@ -84,4 +84,4 @@ const TouristListPage = () => {
     );
 }
 
-export default TouristListPage;
+export default TourOperatorListPage;

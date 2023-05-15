@@ -66,8 +66,8 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         display: 'relative',
                         marginTop: '64px',
                         width: drawerWidth,
-                        backgroundColor: '#ff9e1f',
-                        color: '#fff',
+                        backgroundColor: '#D912EA ',
+                        color: '#D912EA ',
                     },
                 }}
             >

@@ -20,23 +20,26 @@ const AddCategoryForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${baseAPI}${addCategoryAPI}`, {
-        "name": categoryName,
-        "description": categoryDesc,
-        "image": categoryImage
-
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Authorization": `Bearer ${localStorage.getItem('token')}`
+      const response = await axios.post(
+        `${baseAPI}${addCategoryAPI}`,
+        {
+          name: categoryName,
+          description: categoryDesc,
+          image: categoryImage,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      });
+      );
       let successAlert = {
-        errorType: 'success',
-        message: "Category has been successfully added"
-      }
+        errorType: "success",
+        message: "Category has been successfully added",
+      };
 
       setError(successAlert);
       handleClick();
