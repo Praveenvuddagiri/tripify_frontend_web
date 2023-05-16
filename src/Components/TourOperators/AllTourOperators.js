@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TourOperatorCard from "./TourOperatorCard";
-import { baseAPI, getAllTourOperators } from "../../GlobalConstants";
+import { baseAPI, getTourOperatorsPerServiceProvider } from "../../GlobalConstants";
 import { Alert, Box, CircularProgress, Grid, Snackbar } from "@mui/material";
 import axios from "axios";
 
@@ -16,15 +16,16 @@ function AllTourOperators({ jumpToTab }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${baseAPI}${getAllTourOperators}`, {
+      const response = await axios.get(`${baseAPI}${getTourOperatorsPerServiceProvider}`, {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       });
-
-      setTourOperators(response.data.touroperators);
+        console.log(response);
+      setTourOperators(response.data.tourOperators);
 
 
     } catch (error) {

@@ -8,17 +8,17 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-import { baseAPI, deleteUpdateRestaurant } from '../../GlobalConstants';
+import { baseAPI, deleteUpdateHotel } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTab }) {
+function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
 
     const [deleteLoader, setDeletLoader] = React.useState(false);
 
     const handleDelete = async () => {
         try {
             setDeletLoader(true);
-            await axios.delete(`${baseAPI}${deleteUpdateRestaurant}/${restaurant._id.toString()}`, {
+            await axios.delete(`${baseAPI}${deleteUpdateHotel}/${hotel._id.toString()}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -29,7 +29,7 @@ function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTa
 
             let successAlert = {
                 errorType: 'success',
-                message: "Restaurant has been successfully deleted"
+                message: "Hotel has been successfully deleted"
             }
 
             setError(successAlert);
@@ -58,7 +58,7 @@ function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTa
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        localStorage.setItem('restaurant',JSON.stringify(restaurant));
+        localStorage.setItem('hotel',JSON.stringify(hotel));
 
         jumpToTab(2);
     }
@@ -66,17 +66,17 @@ function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTa
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
-                sx={{ height: 140 }}
-                image={restaurant.image.secure_url}
-                title={restaurant.image.id}
+                sx={{ height: 100, width: 250 }}
+                image={hotel.images[0].secure_url}
+                title={hotel.images[0].id}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {restaurant.name}
+                    {hotel.name}
                 </Typography>
                 <div style={{ height: "100px", overflow: "auto" }}>
                     <Typography variant="body1" color="text.secondary">
-                        {restaurant.description}
+                        {hotel.description}
                     </Typography>
                 </div>
             </CardContent>
@@ -109,4 +109,4 @@ function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTa
     );
 }
 
-export default RestaurantCard;
+export default HotelCard;

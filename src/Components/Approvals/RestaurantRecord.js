@@ -11,10 +11,10 @@ import {
 import { Check, Phone, Email, Language, Description } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { approveRestrauntAdmin, baseAPI, unapproveRestrauntAdmin } from '../../GlobalConstants';
+import { approveRestaurantAdmin, baseAPI, unapproveRestaurantAdmin } from '../../GlobalConstants';
 import { LoadingButton } from '@mui/lab';
 
-function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLoading }) {
+function RestaurantRecord({ restaurant, fetchData, setError, handleClick, setIsLoading }) {
 
     const [isApproving, setIsApproving] = useState(false);
     const [isUnapproving, setIsUnapproving] = useState(false);
@@ -22,7 +22,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     const handleApprove = async () => {
         setIsApproving(true);
         try {
-            await axios.put(`${baseAPI}${approveRestrauntAdmin}/${restaurant._id.toString()}`, {}, {
+            await axios.put(`${baseAPI}${approveRestaurantAdmin}/${restaurant._id.toString()}`, {}, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -66,7 +66,7 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     const handleUnapprove = async () => {
         setIsUnapproving(true);
         try {
-            await axios.put(`${baseAPI}${unapproveRestrauntAdmin}/${restaurant._id.toString()}`, {}, {
+            await axios.put(`${baseAPI}${unapproveRestaurantAdmin}/${restaurant._id.toString()}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -210,4 +210,4 @@ function RestrauntRecord({ restaurant, fetchData, setError, handleClick, setIsLo
     );
 }
 
-export default RestrauntRecord;
+export default RestaurantRecord;

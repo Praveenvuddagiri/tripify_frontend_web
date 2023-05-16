@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
-import { baseAPI, getRestaurantsPerServiceProvider } from "../../GlobalConstants";
+import TourOperatorCard from "./TourOperatorCard";
+import { baseAPI, getAllTourOperatorsAdmin } from "../../GlobalConstants";
 import { Alert, Box, CircularProgress, Grid, Snackbar } from "@mui/material";
 import axios from "axios";
 
 
 
 
-function AllRestaurants({ jumpToTab }) {
-  const [restaurants, setRestaurants] = useState([]);
+function AllTourOperators({ jumpToTab }) {
+  const [touroperators, setTourOperators] = useState([]);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ function AllRestaurants({ jumpToTab }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${baseAPI}${getRestaurantsPerServiceProvider}`, {
+      const response = await axios.get(`${baseAPI}${getAllTourOperatorsAdmin}`, {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",
@@ -25,7 +25,7 @@ function AllRestaurants({ jumpToTab }) {
         }
       });
 
-      setRestaurants(response.data.restaurants);
+      setTourOperators(response.data.tourOperators);
 
 
     } catch (error) {
@@ -47,7 +47,7 @@ function AllRestaurants({ jumpToTab }) {
   }
 
   useEffect(() => {
-    localStorage.removeItem('restaurant');
+    localStorage.removeItem('touroperator');
     setIsLoading(true);
 
     fetchData();
@@ -76,11 +76,11 @@ function AllRestaurants({ jumpToTab }) {
       </Box>}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {
-          restaurants.map((restaurant) =>
-            <Grid item xs={2} sm={4} md={3} mb={3} key={restaurant._id}>
+          touroperators.map((touroperator) =>
+            <Grid item xs={2} sm={4} md={3} mb={3} key={touroperator._id}>
               <div>
-                <RestaurantCard
-                  restaurant={restaurant}
+                <TourOperatorCard
+                  touroperator={touroperator}
                   setError={setError}
                   handleClick={handleClick}
                   fetchData={fetchData}
@@ -103,4 +103,4 @@ function AllRestaurants({ jumpToTab }) {
   );
 }
 
-export default AllRestaurants;
+export default AllTourOperators;

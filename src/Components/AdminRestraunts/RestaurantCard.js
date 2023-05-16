@@ -7,17 +7,17 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import axios from "axios";
-import { baseAPI, deleteUpdateHotel } from "../../GlobalConstants";
+import { baseAPI, deleteUpdateRestaurant } from "../../GlobalConstants";
 import { LoadingButton } from "@mui/lab";
 
-function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
+function RestaurantCard({ restaurant, setError, handleClick, fetchData, jumpToTab }) {
   const [deleteLoader, setDeletLoader] = React.useState(false);
 
   const handleDelete = async () => {
     try {
       setDeletLoader(true);
       await axios.delete(
-        `${baseAPI}${deleteUpdateHotel}/${hotel._id.toString()}`,
+        `${baseAPI}${deleteUpdateRestaurant}/${restaurant._id.toString()}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
 
       let successAlert = {
         errorType: "success",
-        message: "Hotel has been successfully deleted",
+        message: "Restaurant has been successfully deleted",
       };
 
       setError(successAlert);
@@ -54,30 +54,30 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
 
   const handleView = (e) => {
     e.preventDefault();
-    localStorage.setItem("hotel", JSON.stringify(hotel));
+    localStorage.setItem("restaurant", JSON.stringify(restaurant));
 
-    jumpToTab(2);
+    jumpToTab(1);
   };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 100, width: 250 }}
-        image={hotel.images[0].secure_url}
-        title={hotel.images[0].id}
+        image={restaurant.images[0].secure_url}
+        title={restaurant.images[0].id}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {hotel.name}
+          {restaurant.name}
         </Typography>
         <div style={{ height: "100px", overflow: "auto" }}>
           <Typography variant="body1" color="text.secondary">
-            {hotel.description}
+            {restaurant.description}
           </Typography>
         </div>
       </CardContent>
       <CardActions style={{ display: "flex", justifyContent: "space-evenly" }}>
-        {hotel.isApproved ? (
+        {restaurant.isApproved ? (
           <Typography variant="body1" style={{ color: "green" }}>
             <b>{"Approved"}</b>
           </Typography>
@@ -101,4 +101,4 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
   );
 }
 
-export default HotelCard;
+export default RestaurantCard;

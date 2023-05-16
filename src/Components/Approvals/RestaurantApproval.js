@@ -12,12 +12,12 @@ import {
     CircularProgress,
     Box,
 } from '@mui/material';
-import { approveRestrauntAdmin, baseAPI, getAllRestrauntsAdmin, getOneIslandDetailsUsingId, unapproveRestrauntAdmin } from '../../GlobalConstants';
+import { approveRestaurantAdmin, baseAPI, getAllRestaurantAdmin, getOneIslandDetailsUsingId, unapproveRestaurantAdmin } from '../../GlobalConstants';
 import axios from 'axios';
-import RestrauntRecord from './RestrauntRecord';
+import RestaurantRecord from './RestaurantRecord';
 
-function RestrauntApproval() {
-    const [restaurants, setRestraunts] = useState([]);
+function RestaurantApproval() {
+    const [restaurants, setRestaurants] = useState([]);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +40,7 @@ function RestrauntApproval() {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`${baseAPI}${getAllRestrauntsAdmin}`, {
+            const response = await axios.get(`${baseAPI}${getAllRestaurantAdmin}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -60,7 +60,7 @@ function RestrauntApproval() {
                 };
             }
             console.log(response);
-            setRestraunts(restrauntsUpdated);
+            setRestaurants(restrauntsUpdated);
 
         } catch (error) {
 
@@ -118,7 +118,7 @@ function RestrauntApproval() {
                     </Box>}
                     <TableBody>
                         {restaurants.map((restaurant) => (
-                            <RestrauntRecord
+                            <RestaurantRecord
                                 restaurant={restaurant}
                                 fetchData={fetchData}
                                 handleClick={handleClick}
@@ -141,4 +141,4 @@ function RestrauntApproval() {
     );
 }
 
-export default RestrauntApproval;
+export default RestaurantApproval;

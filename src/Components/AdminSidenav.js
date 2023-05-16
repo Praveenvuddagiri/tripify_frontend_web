@@ -25,9 +25,10 @@ import ServiceHome from "./Services/ServiceHome";
 import PlaceHome from "./Places/PlaceHome";
 import TouristListPage from "./Tourists/TouristListPage";
 import ApprovalHome from "./Approvals/ApprovalHome";
-import TourOpearatorListPage from "./AdminTourOperators/TourOperatorListPage";
 import ServiceProviderListPage from "./ServiceProviders/ServiceProviderListPage";
 import AdminHotelHome from "./AdminHotels/AdminHotelHome";
+import TourOperatorHome from "./AdminTourOperators/AdminTourOperatorHome";
+import AdminRestaurantHome from "./AdminRestraunts/AdminRestaurantHome";
 
 const drawerWidth = 240;
 
@@ -47,9 +48,9 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
       case "hotels":
         return <AdminHotelHome />;
       case "touroperators":
-        return <TourOpearatorListPage />;
+        return <TourOperatorHome />;
       case "restaurants":
-        return <TouristListPage />;
+        return <AdminRestaurantHome />;
       case "serviceProviders":
         return <ServiceProviderListPage />;
       case "approvals":

@@ -4,7 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import AllRestaurants from './AllRestaurants';
+import AllTourOperators from './AllTourOperators';
+import ViewTourOperator from './ViewTourOperator';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,7 +40,7 @@ function a11yProps(index) {
   };
 }
 
-export default function RestaurantHome() {
+export default function AdminTourOperatorHome() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,15 +56,15 @@ export default function RestaurantHome() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Restaurants" {...a11yProps(0)} />
-          <Tab label="View Restaurant" {...a11yProps(1)} />
+          <Tab label="TourOperators" {...a11yProps(0)} />
+          <Tab label="View TourOperator" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <AllRestaurants jumpToTab={jumpToTab} />
+        <AllTourOperators jumpToTab={jumpToTab} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ViewRestaurant />
+        <ViewTourOperator />
       </TabPanel>
     </Box>
   );

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
-import { baseAPI, getRestaurantsPerServiceProvider } from "../../GlobalConstants";
+import HotelCard from "./HotelCard";
+import { baseAPI, getHotelsPerServiceProvider } from "../../GlobalConstants";
 import { Alert, Box, CircularProgress, Grid, Snackbar } from "@mui/material";
 import axios from "axios";
 
 
 
-
-function AllRestaurants({ jumpToTab }) {
-  const [restaurants, setRestaurants] = useState([]);
+function AllHotel({ jumpToTab }) {
+  const [hotels, setHotels] = useState([]);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +15,7 @@ function AllRestaurants({ jumpToTab }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${baseAPI}${getRestaurantsPerServiceProvider}`, {
+      const response = await axios.get(`${baseAPI}${getHotelsPerServiceProvider}`, {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",
@@ -24,8 +23,8 @@ function AllRestaurants({ jumpToTab }) {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       });
-
-      setRestaurants(response.data.restaurants);
+        console.log(response);
+      setHotels(response.data.hotels);
 
 
     } catch (error) {
@@ -47,7 +46,7 @@ function AllRestaurants({ jumpToTab }) {
   }
 
   useEffect(() => {
-    localStorage.removeItem('restaurant');
+    localStorage.removeItem('hotel');
     setIsLoading(true);
 
     fetchData();
@@ -76,11 +75,11 @@ function AllRestaurants({ jumpToTab }) {
       </Box>}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {
-          restaurants.map((restaurant) =>
-            <Grid item xs={2} sm={4} md={3} mb={3} key={restaurant._id}>
+          hotels.map((hotel) =>
+            <Grid item xs={2} sm={4} md={3} mb={3} key={hotel._id}>
               <div>
-                <RestaurantCard
-                  restaurant={restaurant}
+                <HotelCard
+                  hotel={hotel}
                   setError={setError}
                   handleClick={handleClick}
                   fetchData={fetchData}
@@ -103,4 +102,4 @@ function AllRestaurants({ jumpToTab }) {
   );
 }
 
-export default AllRestaurants;
+export default AllHotel;

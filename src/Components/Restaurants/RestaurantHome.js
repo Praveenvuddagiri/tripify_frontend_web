@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import AddRestaurant from './AddRestaurant';
 import AllRestaurants from './AllRestaurants';
 import UpdateRestaurant from './UpdateRestaurant';
+import ViewRestaurant from './ViewRestaurant';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,6 +62,7 @@ export default function RestaurantHome() {
           <Tab label="Restaurants" {...a11yProps(0)} />
           <Tab label="Add Restaurant" {...a11yProps(1)} />
           <Tab label="Update Restaurant" {...a11yProps(2)} />
+          <Tab label="View Restaurant" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -70,6 +73,9 @@ export default function RestaurantHome() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <UpdateRestaurant jumpToTab={jumpToTab}/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <ViewRestaurant jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );

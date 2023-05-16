@@ -7,17 +7,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import axios from "axios";
-import { baseAPI, deleteUpdateHotel } from "../../GlobalConstants";
-import { LoadingButton } from "@mui/lab";
+import { baseAPI, deleteUpdateTourOperator } from "../../GlobalConstants";
 
-function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
+function TourOperatorCard({ touroperator, setError, handleClick, fetchData, jumpToTab }) {
   const [deleteLoader, setDeletLoader] = React.useState(false);
 
   const handleDelete = async () => {
     try {
       setDeletLoader(true);
       await axios.delete(
-        `${baseAPI}${deleteUpdateHotel}/${hotel._id.toString()}`,
+        `${baseAPI}${deleteUpdateTourOperator}/${touroperator._id.toString()}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -30,7 +29,7 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
 
       let successAlert = {
         errorType: "success",
-        message: "Hotel has been successfully deleted",
+        message: "TourOperator has been successfully deleted",
       };
 
       setError(successAlert);
@@ -54,7 +53,7 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
 
   const handleView = (e) => {
     e.preventDefault();
-    localStorage.setItem("hotel", JSON.stringify(hotel));
+    localStorage.setItem("touroperator", JSON.stringify(touroperator));
 
     jumpToTab(2);
   };
@@ -63,21 +62,21 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 100, width: 250 }}
-        image={hotel.images[0].secure_url}
-        title={hotel.images[0].id}
+        image={touroperator.image.secure_url}
+        title={touroperator.image.id}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {hotel.name}
+          {touroperator.name}
         </Typography>
         <div style={{ height: "100px", overflow: "auto" }}>
           <Typography variant="body1" color="text.secondary">
-            {hotel.description}
+            {touroperator.description}
           </Typography>
         </div>
       </CardContent>
       <CardActions style={{ display: "flex", justifyContent: "space-evenly" }}>
-        {hotel.isApproved ? (
+        {touroperator.isApproved ? (
           <Typography variant="body1" style={{ color: "green" }}>
             <b>{"Approved"}</b>
           </Typography>
@@ -101,4 +100,4 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
   );
 }
 
-export default HotelCard;
+export default TourOperatorCard;

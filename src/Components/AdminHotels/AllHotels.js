@@ -80,7 +80,7 @@ function AllHotels({ jumpToTab }) {
             <Grid item xs={2} sm={4} md={3} mb={3} key={hotel._id}>
               <div>
                 <HotelCard
-                  hotels={hotel}
+                  hotel={hotel}
                   setError={setError}
                   handleClick={handleClick}
                   fetchData={fetchData}
