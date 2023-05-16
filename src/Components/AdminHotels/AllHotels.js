@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HotelCard from "./HotelCard";
-import { baseAPI, getAllHotelAdmin } from "../../GlobalConstants";
+import { baseAPI, getAllHotelsAdmin } from "../../GlobalConstants";
 import { Alert, Box, CircularProgress, Grid, Snackbar } from "@mui/material";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ function AllHotels({ jumpToTab }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${baseAPI}${getAllHotelAdmin}`, {
+      const response = await axios.get(`${baseAPI}${getAllHotelsAdmin}`, {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",

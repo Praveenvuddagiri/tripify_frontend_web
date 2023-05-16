@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import { baseAPI, getAllRestaurants } from "../../GlobalConstants";
+import { baseAPI, getAllRestrauntsAdmin } from "../../GlobalConstants";
 import { Alert, Box, CircularProgress, Grid, Snackbar } from "@mui/material";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ function AllRestaurants({ jumpToTab }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${baseAPI}${getAllRestaurants}`, {
+      const response = await axios.get(`${baseAPI}${getAllRestrauntsAdmin}`, {
         headers: {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*",

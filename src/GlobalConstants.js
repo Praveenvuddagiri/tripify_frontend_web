@@ -36,3 +36,4 @@ export const addTourOperatorByServiceProviderAPI = "api/v1/touroperator/add";
 export const addRestaurantByServiceProviderAPI = "api/v1/restaurant/add";
 export const deleteUpdateRestaurant = "api/v1/admin/restaurant";
 export const deleteUpdateTourOperator = "api/v1/admin/touroperator";
+export const addHotelByServiceProviderAPI = "api/v1/hotel/add";
