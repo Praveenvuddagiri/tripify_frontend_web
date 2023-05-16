@@ -18,8 +18,6 @@ import PeopleIcon from "@mui/icons-material/People";
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import FeedbackIcon from "@mui/icons-material/Feedback";
-// import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from "@mui/material/Box";
 import CategoryHome from "./Categories/CategoryHome";
 import IslandHome from "./Islands/IslandHome";
@@ -29,6 +27,7 @@ import TouristListPage from "./Tourists/TouristListPage";
 import ApprovalHome from "./Approvals/ApprovalHome";
 import TourOpearatorListPage from "./AdminTourOperators/TourOperatorListPage";
 import ServiceProviderListPage from "./ServiceProviders/ServiceProviderListPage";
+import AdminHotelHome from "./AdminHotels/AdminHotelHome";
 
 const drawerWidth = 240;
 
@@ -46,7 +45,7 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
       case "tourists":
         return <TouristListPage />;
       case "hotels":
-        return <TouristListPage />;
+        return <AdminHotelHome />;
       case "touroperators":
         return <TourOpearatorListPage />;
       case "restaurants":
@@ -55,8 +54,6 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         return <ServiceProviderListPage />;
       case "approvals":
         return <ApprovalHome />;
-      //   case 'feedbacks':
-      //     return <Feedbacks />;
       default:
         return null;
     }
@@ -84,15 +81,6 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         }}
       >
         <List>
-          {/* <ListItem button
-                        selected={selectedMenuItem === 'analytics'}
-                        onClick={() => onMenuItemClick('analyitcs')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <AnalyticsIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Analytics" sx={{ color: '#fff' }} />
-                    </ListItem> */}
           <ListItem
             button
             selected={selectedMenuItem === "Place"}
@@ -202,17 +190,6 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
               <CheckCircleIcon sx={{ color: "#fff" }} />
             </ListItemIcon>
             <ListItemText primary="Approvals" sx={{ color: "#fff" }} />
-          </ListItem>
-          <ListItem
-            button
-            selected={selectedMenuItem === "feedbacks"}
-            onClick={() => onMenuItemClick("feedbacks")}
-            sx={{ "&:hover": { backgroundColor: "#2F3E62" } }}
-          >
-            <ListItemIcon>
-              <FeedbackIcon sx={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Feedbacks" sx={{ color: "#fff" }} />
           </ListItem>
         </List>
       </Drawer>

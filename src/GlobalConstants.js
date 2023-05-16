@@ -34,3 +34,5 @@ export const approveTourOperatorAdmin = "api/v1/admin/touroperator/approve";
 export const unapproveTourOperatorAdmin = "api/v1/admin/touroperator/unapprove";
 export const addTourOperatorByServiceProviderAPI = "api/v1/touroperator/add";
 export const addRestaurantByServiceProviderAPI = "api/v1/restaurant/add";
+export const deleteUpdateRestaurant = "api/v1/admin/restaurant";
+export const deleteUpdateTourOperator = "api/v1/admin/touroperator";

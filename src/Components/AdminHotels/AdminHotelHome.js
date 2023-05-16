@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import HotelCard from './HotelCard';
-import ViewHotel from './HotelCard';
+import AllHotels from './AllHotels';
+import ViewHotel from './ViewHotel';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,7 +61,7 @@ export default function AdminHotelHome() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <HotelCard jumpToTab={jumpToTab} />
+        <AllHotels jumpToTab={jumpToTab} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ViewHotel />

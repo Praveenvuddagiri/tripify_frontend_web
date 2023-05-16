@@ -8,10 +8,10 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-function HotelCard({ place, setError, handleClick, fetchData, jumpToTab }) {
+function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
   const handleView = (e) => {
     e.preventDefault();
-    localStorage.setItem("hotel", JSON.stringify(place));
+    localStorage.setItem("hotel", JSON.stringify(hotel));
 
     jumpToTab(3);
   };

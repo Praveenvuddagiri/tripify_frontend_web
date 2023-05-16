@@ -34,14 +34,6 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
              return <RestaurantHome />;
           case 'services':
             return <ServiceHome />;
-          case 'tourists':
-            return <TouristListPage />;
-        //   case 'serviceProviders':
-        //     return <ServiceProviders />;
-        //   case 'approvals':
-        //     return <Approvals />;
-        //   case 'feedbacks':
-        //     return <Feedbacks />;
           default:
             return null;
         }
@@ -72,15 +64,6 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                 }}
             >
                 <List>
-                    {/* <ListItem button
-                        selected={selectedMenuItem === 'analytics'}
-                        onClick={() => onMenuItemClick('analyitcs')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <AnalyticsIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Analytics" sx={{ color: '#fff' }} />
-                    </ListItem> */}
                     <ListItem button selected={selectedMenuItem === 'Hotel'}
                         onClick={() => onMenuItemClick('Hotel')}
                         
@@ -113,40 +96,6 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                             <RoomServiceIcon sx={{ color: '#fff' }} />
                         </ListItemIcon>
                         <ListItemText primary="Services" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'tourists'}
-                        onClick={() => onMenuItemClick('tourists')}
-
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <PeopleIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Tourists" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'serviceProviders'}
-                        onClick={() => onMenuItemClick('serviceProviders')}
-
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <SupervisorAccountIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Service Providers" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'approvals'}
-                        onClick={() => onMenuItemClick('approvals')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <CheckCircleIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Approvals" sx={{ color: '#fff' }} />
-                    </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'feedbacks'}
-                        onClick={() => onMenuItemClick('feedbacks')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <FeedbackIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Feedbacks" sx={{ color: '#fff' }} />
                     </ListItem>
                 </List>
             </Drawer>
