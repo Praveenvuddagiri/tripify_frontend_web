@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import AddHotel from './AddHotel';
 import AllHotel from './AllHotel';
 import UpdateHotel from './UpdateHotel';
+import ViewHotel from './ViewHotel';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,6 +61,7 @@ export default function HotelHome() {
           <Tab label="Hotels" {...a11yProps(0)} />
           <Tab label="Add Hotel" {...a11yProps(1)} />
           <Tab label="Update Hotel" {...a11yProps(2)} />
+          <Tab label="View Hotel" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -70,6 +72,9 @@ export default function HotelHome() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <UpdateHotel jumpToTab={jumpToTab}/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <ViewHotel jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );

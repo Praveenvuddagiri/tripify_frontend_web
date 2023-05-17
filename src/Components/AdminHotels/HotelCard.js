@@ -56,7 +56,7 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
     e.preventDefault();
     localStorage.setItem("hotel", JSON.stringify(hotel));
 
-    jumpToTab(2);
+    jumpToTab(1);
   };
 
   return (

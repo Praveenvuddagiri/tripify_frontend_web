@@ -65,7 +65,7 @@ const ViewHotel = ({jumpToTab}) => {
     const [imagePreview, setImagePreview] = useState([]);
     useEffect(() => {
         if (!localStorage.getItem("hotel")) {
-          jumpToTab(1);
+          jumpToTab(3);
         } else {
           const ho = JSON.parse(localStorage.getItem("hotel"));
           setHotel(ho);
@@ -237,6 +237,7 @@ const ViewHotel = ({jumpToTab}) => {
                                     name="locationUrl"
                                     type="text"
                                     value={locationUrl}
+                                    onChange={(e) => setLocationUrl(e.target.value)}
                                     sm={8}
                                 />
                                 <Button

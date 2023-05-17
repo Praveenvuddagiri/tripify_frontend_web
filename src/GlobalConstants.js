@@ -40,3 +40,5 @@ export const addHotelByServiceProviderAPI = "api/v1/hotel/add";
 export const getRestaurantsPerServiceProvider = "api/v1/serviceprovider/restaurants";
 export const getHotelsPerServiceProvider = "api/v1/serviceprovider/hotels";
 export const deleteUpdateHotel = "api/v1/admin/hotel";
+export const UpdateHotelServiceProvider = "api/v1/serviceprovider/hotel";
+export const UpdateTourOperatorServiceProvider = "api/v1/touroperator";

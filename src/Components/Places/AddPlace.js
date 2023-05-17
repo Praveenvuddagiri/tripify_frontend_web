@@ -330,7 +330,7 @@ const AddPlace = () => {
                           name="zip"
                           label="Zip Code"
                           required
-                          value={formValues.address.zipCode}
+                          value={formValues.address.zip}
                           onChange={handleAddressChange}
                           fullWidth
                         />

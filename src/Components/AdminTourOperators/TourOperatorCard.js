@@ -55,7 +55,7 @@ function TourOperatorCard({ touroperator, setError, handleClick, fetchData, jump
     e.preventDefault();
     localStorage.setItem("touroperator", JSON.stringify(touroperator));
 
-    jumpToTab(2);
+    jumpToTab(1);
   };
 
   return (

@@ -12,11 +12,11 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
-import { deleteUpdateTourOperator, baseAPI } from '../../GlobalConstants';
+import { UpdateTourOperatorServiceProvider, baseAPI } from '../../GlobalConstants';
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
 
-const UpdateTourOperator = () => {
+const UpdateTourOperator = ({jumpToTab}) => {
     const [company, setCompany] = useState({
         name: '',
         description: '',
@@ -40,6 +40,15 @@ const UpdateTourOperator = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (!localStorage.getItem("touroperator")) {
+          jumpToTab(2);
+        } else {
+          const tour = JSON.parse(localStorage.getItem("touroperator"));
+          setCompany(tour);
+        }
+      }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -99,7 +108,7 @@ const UpdateTourOperator = () => {
 
 
         try {
-            await axios.post(`${baseAPI}${deleteUpdateTourOperator}`, {
+            await axios.put(`${baseAPI}${UpdateTourOperatorServiceProvider}`, {
                 "image": company.image,
                 "governmentAuthorizedLicense": company.governmentAuthorizedLicense,
                 "tariffDocument": company.tariffDocument,
@@ -114,7 +123,7 @@ const UpdateTourOperator = () => {
             });
             let successAlert = {
                 errorType: 'success',
-                message: "Tour Operator has been successfully added"
+                message: "Tour Operator has been successfully updated"
             }
 
             setError(successAlert);
@@ -149,7 +158,7 @@ const UpdateTourOperator = () => {
             <Container maxWidth="md">
                 <Grid container spacing={2}>
                     <Grid item xs={12} >
-                        <Typography variant="h5">Add a new company</Typography>
+                        <Typography variant="h5">Update company</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -181,55 +190,8 @@ const UpdateTourOperator = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Typography variant="h6">Image</Typography>
-
-
-                        <input
-                            accept="image/*"
-                            id="image-upload"
-                            type="file"
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
-                            name='image'
-                        />
-                        <label htmlFor="image-upload">
-                            <Button
-                                variant="contained"
-                                component="span"
-                                startIcon={<AddCircleRoundedIcon />}
-                                sx={{ mt: 2 }}
-                            >
-                                Add Company Logo
-                            </Button>
-                        </label>
-                        {company.image && (
-                            <Grid item xs={4} key={company.image.name} mt={2}>
-                                <Paper
-                                    sx={{
-                                        position: 'relative',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        height: 200,
-                                        overflow: 'hidden',
-                                    }}
-                                >
-                                    <img
-                                        src={URL.createObjectURL(company.image)}
-                                        alt={company.image.name}
-                                        style={{ height: '100%', width: 'auto' }}
-                                    />
-                                </Paper>
-                            </Grid>
-                        )}
-                    </Grid>
-
-
-                    <Grid item xs={12}>
                         <Typography variant="h6" >Address</Typography>
                     </Grid>
-
-
 
                     <Grid item xs={12}>
                         <TextField
@@ -333,100 +295,6 @@ const UpdateTourOperator = () => {
                         />
                     </Grid>
 
-
-                    <Grid item xs={12}>
-
-
-                        <input
-                            accept=".pdf"
-                            id="govt-upload"
-                            type="file"
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
-                            name='governmentAuthorizedLicense'
-                        />
-                        <label htmlFor="govt-upload">
-                            <Button
-                                variant="contained"
-                                component="span"
-                                startIcon={<AddCircleRoundedIcon />}
-                                sx={{ mt: 2 }}
-                            >
-                                Add Government Authorized License
-                            </Button>
-                        </label>
-                        {company.governmentAuthorizedLicense && (
-                            <Grid item xs={7} key={company.governmentAuthorizedLicense.name} mt={2}>
-                                <Paper
-                                    sx={{
-                                        position: 'relative',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        height: 200,
-                                        overflow: 'hidden',
-                                    }}
-                                >
-
-                                    <embed
-                                        src={URL.createObjectURL(company.governmentAuthorizedLicense)}
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="auto"
-                                    />
-
-                                </Paper>
-                            </Grid>
-                        )}
-                    </Grid>
-
-
-                    <Grid item xs={12}>
-
-
-                        <input
-                            accept=".pdf"
-                            id="tariff-upload"
-                            type="file"
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
-                            name='tariffDocument'
-                        />
-                        <label htmlFor="tariff-upload">
-                            <Button
-                                variant="contained"
-                                component="span"
-                                startIcon={<AddCircleRoundedIcon />}
-                                sx={{ mt: 2 }}
-                            >
-                                Add Tariff Document
-                            </Button>
-                        </label>
-                        {company.tariffDocument && (
-                            <Grid item xs={7} key={company.tariffDocument.name} mt={2}>
-                                <Paper
-                                    sx={{
-                                        position: 'relative',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        height: 200,
-                                        overflow: 'hidden',
-                                    }}
-                                >
-
-                                    <embed
-                                        src={URL.createObjectURL(company.tariffDocument)}
-                                        type="application/pdf"
-                                        width="100%"
-                                        height="auto"
-                                    />
-
-                                </Paper>
-                            </Grid>
-                        )}
-                    </Grid>
-
                     {isLoading ?
                         <LoadingButton
                             loading={isLoading}
@@ -442,7 +310,7 @@ const UpdateTourOperator = () => {
 
                         <Grid item xs={12} >
                             <Button type="submit" variant="contained" color="primary" fullWidth>
-                                Add company
+                                Update company
                             </Button>
                         </Grid>
                     }
