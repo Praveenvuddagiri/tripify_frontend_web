@@ -19,6 +19,7 @@ import {
 import { baseAPI, getAllHotelsAdmin, getOneIslandDetailsUsingId } from '../../GlobalConstants';
 import axios from 'axios';
 import HotelRecord from './HotelRecord';
+import { getAllIslands } from '../../GlobalConstants';
 
 function HotelApproval() {
     const [hotels, setHotels] = useState([]);
@@ -26,6 +27,7 @@ function HotelApproval() {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [filter, setFilter] = useState('pending');
+    const [islands, setIslands] = useState([]);
 
 
 
@@ -92,20 +94,29 @@ function HotelApproval() {
     }
 
     const getIslandName = async (islandId) => {
-        const response = await axios.get(`${baseAPI}${getOneIslandDetailsUsingId}/${islandId}`, {
+        var isls = islands;
+
+        isls = isls.filter((is) => is._id.toString() === islandId);
+        return isls[0].name;
+    }
+
+    const fetchIslandData = async () => {
+        const response = await axios.get(`${baseAPI}${getAllIslands}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
             }
         });
-        return response.data.island.name;
+        setIslands(response.data.islands);
     }
 
 
 
     useEffect(() => {
+        fetchIslandData();
         fetchData();
+        
     }, [])
 
     useEffect(() => {

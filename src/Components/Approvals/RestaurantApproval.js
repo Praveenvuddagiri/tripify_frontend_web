@@ -16,7 +16,7 @@ import {
     Select,
     MenuItem,
 } from '@mui/material';
-import { baseAPI, getAllRestaurantAdmin, getOneIslandDetailsUsingId } from '../../GlobalConstants';
+import { baseAPI, getAllIslands, getAllRestaurantAdmin, getOneIslandDetailsUsingId } from '../../GlobalConstants';
 import axios from 'axios';
 import RestaurantRecord from './RestaurantRecord';
 
@@ -26,6 +26,7 @@ function RestaurantApproval() {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [filter, setFilter] = useState('pending');
+    const [islands, setIslands] = useState([]);
 
 
 
@@ -90,19 +91,26 @@ function RestaurantApproval() {
     }
 
     const getIslandName = async (islandId) => {
-        const response = await axios.get(`${baseAPI}${getOneIslandDetailsUsingId}/${islandId}`, {
+        var isls = islands;
+
+        isls = isls.filter((is) => is._id.toString() === islandId);
+        return isls[0].name;
+    }
+
+    const fetchIslandData = async () => {
+        const response = await axios.get(`${baseAPI}${getAllIslands}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
             }
         });
-        return response.data.island.name;
+        setIslands(response.data.islands);
     }
 
 
-
     useEffect(() => {
+        fetchIslandData();
         fetchData();
     }, [])
 
