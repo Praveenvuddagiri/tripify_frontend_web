@@ -179,7 +179,6 @@ const ViewTourOperator = ({ jumpToTab }) => {
                             name="phone"
                             label="Contact phone"
                             value={company.contact.phone}
-                            type='number'
                             fullWidth
                             required
                             disabled

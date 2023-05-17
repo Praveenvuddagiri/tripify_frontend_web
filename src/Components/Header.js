@@ -16,10 +16,10 @@ function Header() {
   const userData = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" color={userData ? userData.role !== 'admin'? 'secondary': 'primary': 'primary'}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          TRIPIFY
+          TRIPIFY ANDAMAN
         </Typography>
         {userData ? (userData.role === 'admin' ?
           <>

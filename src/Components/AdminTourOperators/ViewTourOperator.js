@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 import {
     TextField,
-
-    Button,
     Grid,
     Typography,
     Container,
-    Paper,
-    Snackbar,
-    Alert,
+    Paper
 } from '@mui/material';
-import { addTourOperatorByServiceProviderAPI, baseAPI } from '../../GlobalConstants';
-import axios from 'axios';
-import { LoadingButton } from '@mui/lab';
-
-const ViewTourOperator = ({jumpToTab}) => {
+const ViewTourOperator = ({ jumpToTab }) => {
     const [company, setCompany] = useState({
         name: '',
         description: '',
@@ -37,20 +28,17 @@ const ViewTourOperator = ({jumpToTab}) => {
         governmentAuthorizedLicense: null
     });
     const [errors, setErrors] = useState({});
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [open, setOpen] = useState(false);
     const [imagePreview, setImagePreview] = useState([]);
 
     useEffect(() => {
         if (!localStorage.getItem("touroperator")) {
-          jumpToTab(1);
+            jumpToTab(1);
         } else {
-          const tour = JSON.parse(localStorage.getItem("touroperator"));
-          setCompany(tour);
-          setImagePreview(tour.images);
+            const tour = JSON.parse(localStorage.getItem("touroperator"));
+            setCompany(tour);
+            setImagePreview(tour.images);
         }
-      }, []);
+    }, []);
 
     useEffect(() => {
         console.log(company);
@@ -90,6 +78,30 @@ const ViewTourOperator = ({jumpToTab}) => {
                             error={Boolean(errors.description)}
                             helperText={errors.description}
                         />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Typography variant="h6">Image</Typography>
+                        {company.image && (
+                            <Grid item xs={8} key={company.image.id} mt={2}>
+                                <Paper
+                                    sx={{
+                                        position: 'relative',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: 200,
+                                        overflow: 'hidden',
+                                    }}
+                                >
+                                    <img
+                                        src={company.image.secure_url}
+                                        alt={company.image.id}
+                                        style={{ height: '100%', width: 'auto' }}
+                                    />
+                                </Paper>
+                            </Grid>
+                        )}
                     </Grid>
 
 
@@ -167,7 +179,6 @@ const ViewTourOperator = ({jumpToTab}) => {
                             name="phone"
                             label="Contact phone"
                             value={company.contact.phone}
-                            type='number'
                             fullWidth
                             required
                             disabled
@@ -199,6 +210,62 @@ const ViewTourOperator = ({jumpToTab}) => {
                             helperText={errors.contact?.website}
                         />
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <Typography variant="h6">Government Authorized License</Typography>
+                        {company.governmentAuthorizedLicense && (
+                            <Grid item xs={7} key={company.governmentAuthorizedLicense.id} mt={2}>
+                                <Paper
+                                    sx={{
+                                        position: 'relative',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: 200,
+                                        overflow: 'hidden',
+                                    }}
+                                >
+
+                                    <embed
+                                        src={company.governmentAuthorizedLicense.secure_url}
+                                        type="application/pdf"
+                                        width="100%"
+                                        height="auto"
+                                    />
+
+                                </Paper>
+                            </Grid>
+                        )}
+                    </Grid>
+
+
+                    <Grid item xs={12}>
+                        <Typography variant="h6">Tariff Document</Typography>
+                        {company.tariffDocument && (
+                            <Grid item xs={7} key={company.tariffDocument.id} mt={2}>
+                                <Paper
+                                    sx={{
+                                        position: 'relative',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: 200,
+                                        overflow: 'hidden',
+                                    }}
+                                >
+
+                                    <embed
+                                        src={company.tariffDocument.secure_url}
+                                        type="application/pdf"
+                                        width="100%"
+                                        height="auto"
+                                    />
+
+                                </Paper>
+                            </Grid>
+                        )}
+                    </Grid>
+
                 </Grid>
             </Container>
         </form>
