@@ -11,8 +11,12 @@ import {
     Alert,
     CircularProgress,
     Box,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
-import { approveHotelAdmin, baseAPI, getAllHotelsAdmin, getOneIslandDetailsUsingId, unapproveHotelAdmin } from '../../GlobalConstants';
+import { baseAPI, getAllHotelsAdmin, getOneIslandDetailsUsingId } from '../../GlobalConstants';
 import axios from 'axios';
 import HotelRecord from './HotelRecord';
 
@@ -21,6 +25,7 @@ function HotelApproval() {
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [filter, setFilter] = useState('pending');
 
 
 
@@ -60,6 +65,12 @@ function HotelApproval() {
                 };
             }
 
+            if (filter === 'pending') {
+                hotelsUpdated = hotelsUpdated.filter((hot) => !hot.isApproved);
+            } else if (filter === 'approved') {
+                hotelsUpdated = hotelsUpdated.filter((hot) => hot.isApproved);
+            }
+
             setHotels(hotelsUpdated);
 
         } catch (error) {
@@ -97,8 +108,31 @@ function HotelApproval() {
         fetchData();
     }, [])
 
+    useEffect(() => {
+        fetchData()
+    }, [filter]);
+
+
     return (
         <>
+
+            <FormControl variant="outlined" sx={{ minWidth: 150, marginBottom: '20px' }}>
+                <InputLabel id="hotel-filter-label">Filter</InputLabel>
+                <Select
+                    labelId="hotel-filter-label"
+                    id="hotel-filter"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    label="Filter"
+                >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="pending" >Pending</MenuItem>
+                    <MenuItem value="approved">Approved</MenuItem>
+                </Select>
+            </FormControl>
+
+
+
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>

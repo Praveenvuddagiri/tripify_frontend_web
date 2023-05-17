@@ -11,8 +11,12 @@ import {
     Alert,
     CircularProgress,
     Box,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
-import { approveTourOperatorAdmin, baseAPI, getAllTourOperatorsAdmin, unapproveTourOperatorAdmin } from '../../GlobalConstants';
+import { baseAPI, getAllTourOperatorsAdmin } from '../../GlobalConstants';
 import axios from 'axios';
 import TourOperatorRecord from './TourOperatorRecord';
 
@@ -21,6 +25,8 @@ function TourOperatorApproval() {
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [filter, setFilter] = useState('pending');
+
 
 
 
@@ -49,21 +55,17 @@ function TourOperatorApproval() {
                 }
             });
 
-            setTourOperators(response.data.tourOperators);
-        //     var touroperatorsUpdated = response.data.touroperators
-        //     for (let i = 0; i < touroperatorsUpdated.length; i++) {
-        //         const touroperator = touroperatorsUpdated[i];
-        //         const islandName = await getIslandName(touroperator.island);
-        //         touroperatorsUpdated[i] = {
-        //             ...touroperator,
-        //             island: islandName
-        //         };
-        //     }
-        //     console.log(response);
-        //     setTourOperators(touroperatorsUpdated);
+            var updatedTourOperators = response.data.tourOperators
 
-        // }
-         } catch (error) {
+            if (filter === 'pending') {
+                updatedTourOperators = updatedTourOperators.filter((hot) => !hot.isApproved);
+            } else if (filter === 'approved') {
+                updatedTourOperators = updatedTourOperators.filter((hot) => hot.isApproved);
+            }
+
+            setTourOperators(updatedTourOperators);
+            
+        } catch (error) {
 
 
             if (Math.floor(error.response.status / 100) === 5) {
@@ -81,25 +83,34 @@ function TourOperatorApproval() {
         }
     }
 
-    // const getIslandName = async (islandId) => {
-    //     const response = await axios.get(`${baseAPI}${getOneIslandDetailsUsingId}/${islandId}`, {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             "Access-Control-Allow-Origin": "*",
-    //             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    //         }
-    //     });
-    //     return response.data.island.name;
-    // }
-
-
 
     useEffect(() => {
         fetchData();
     }, [])
 
+    useEffect(() => {
+        fetchData()
+    }, [filter]);
+
+
+
     return (
         <>
+
+            <FormControl variant="outlined" sx={{ minWidth: 150, marginBottom: '20px' }}>
+                <InputLabel id="hotel-filter-label">Filter</InputLabel>
+                <Select
+                    labelId="hotel-filter-label"
+                    id="hotel-filter"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    label="Filter"
+                >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="pending" >Pending</MenuItem>
+                    <MenuItem value="approved">Approved</MenuItem>
+                </Select>
+            </FormControl>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>

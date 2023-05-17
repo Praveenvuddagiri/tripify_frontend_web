@@ -11,8 +11,12 @@ import {
     Alert,
     CircularProgress,
     Box,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
-import { approveRestaurantAdmin, baseAPI, getAllRestaurantAdmin, getOneIslandDetailsUsingId, unapproveRestaurantAdmin } from '../../GlobalConstants';
+import { baseAPI, getAllRestaurantAdmin, getOneIslandDetailsUsingId } from '../../GlobalConstants';
 import axios from 'axios';
 import RestaurantRecord from './RestaurantRecord';
 
@@ -21,6 +25,7 @@ function RestaurantApproval() {
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [filter, setFilter] = useState('pending');
 
 
 
@@ -59,7 +64,11 @@ function RestaurantApproval() {
                     island: islandName
                 };
             }
-            console.log(response);
+            if (filter === 'pending') {
+                restrauntsUpdated = restrauntsUpdated.filter((hot) => !hot.isApproved);
+            } else if (filter === 'approved') {
+                restrauntsUpdated = restrauntsUpdated.filter((hot) => hot.isApproved);
+            }
             setRestaurants(restrauntsUpdated);
 
         } catch (error) {
@@ -97,8 +106,28 @@ function RestaurantApproval() {
         fetchData();
     }, [])
 
+    useEffect(() => {
+        fetchData()
+    }, [filter]);
+
+
     return (
         <>
+
+            <FormControl variant="outlined" sx={{ minWidth: 150, marginBottom: '20px' }}>
+                <InputLabel id="hotel-filter-label">Filter</InputLabel>
+                <Select
+                    labelId="hotel-filter-label"
+                    id="hotel-filter"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    label="Filter"
+                >
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="pending" >Pending</MenuItem>
+                    <MenuItem value="approved">Approved</MenuItem>
+                </Select>
+            </FormControl>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
