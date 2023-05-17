@@ -12,7 +12,7 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
-import { UpdateTourOperatorServiceProvider, baseAPI } from '../../GlobalConstants';
+import { baseAPI, deleteUpdateTourOperator } from '../../GlobalConstants';
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
 
@@ -104,18 +104,15 @@ const UpdateTourOperator = ({jumpToTab}) => {
         event.preventDefault();
 
         setIsLoading(true);
-        var data = JSON.stringify(company);
+        var data = company;
 
 
         try {
-            await axios.put(`${baseAPI}${UpdateTourOperatorServiceProvider}`, {
-                "image": company.image,
-                "governmentAuthorizedLicense": company.governmentAuthorizedLicense,
-                "tariffDocument": company.tariffDocument,
+            await axios.put(`${baseAPI}${deleteUpdateTourOperator}/${company._id.toString()}`, {
                 data
             }, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
                     "Authorization": `Bearer ${localStorage.getItem('token')}`

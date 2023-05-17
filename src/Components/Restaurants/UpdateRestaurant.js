@@ -185,16 +185,10 @@ const UpdateRestuarant = ({jumpToTab}) => {
     event.preventDefault();
 
     setIsLoading(true);
-    var data = JSON.stringify(restaurant);
+    var data = restaurant;
     try {
       var response = await axios.put(
-        `${baseAPI}${deleteUpdateRestaurant}`,
-        {
-          images: restaurant.images,
-          governmentAuthorizedLicense: restaurant.governmentAuthorizedLicense,
-          menu: restaurant.menu,
-          data,
-        },
+        `${baseAPI}${deleteUpdateRestaurant}/${restaurant._id.toString()}`,
         {
           data,
         },

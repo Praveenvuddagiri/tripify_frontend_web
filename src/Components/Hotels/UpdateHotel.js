@@ -22,6 +22,7 @@ import {
 import {
     UpdateHotelServiceProvider,
     baseAPI,
+    deleteUpdateHotel,
     getAllIslands,
 } from "../../GlobalConstants";
 import axios from "axios";
@@ -184,13 +185,13 @@ const [hotel, setHotel] = useState ({
         event.preventDefault();
 
         setIsLoading(true);
-        var data = JSON.stringify(hotel);
+        var data = hotel;
 
         try {
             await axios.put(
-                `${baseAPI}${UpdateHotelServiceProvider}/${hotel._id.toString()}`,
+                `${baseAPI}${deleteUpdateHotel}/${hotel._id.toString()}`,
                 {
-                    hotel,
+                    data,
                 },
                 {
                     headers: {

@@ -2,14 +2,7 @@ import React from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import HotelIcon from '@mui/icons-material/Hotel';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
-import PeopleIcon from '@mui/icons-material/People';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import FeedbackIcon from '@mui/icons-material/Feedback';
-// import AnalyticsIcon from '@mui/icons-material/Analytics';
 import Box from '@mui/material/Box';
-import ServiceHome from './Services/ServiceHome';
-import TouristListPage from './Tourists/TouristListPage';
 import TourIcon from '@mui/icons-material/Tour';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import HotelHome from './Hotels/HotelHome';
@@ -32,8 +25,7 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
             return <TourOperatorHome />;
            case 'Restaurant':
              return <RestaurantHome />;
-          case 'services':
-            return <ServiceHome />;
+          
           default:
             return null;
         }
@@ -89,14 +81,7 @@ const ServiceProviderSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
                         </ListItemIcon>
                         <ListItemText primary="Restaurant" sx={{ color: '#fff' }} />
                     </ListItem>
-                    <ListItem button selected={selectedMenuItem === 'services'}
-                        onClick={() => onMenuItemClick('services')}
-                        sx={{ '&:hover': { backgroundColor: '#2F3E62' } }}>
-                        <ListItemIcon>
-                            <RoomServiceIcon sx={{ color: '#fff' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Services" sx={{ color: '#fff' }} />
-                    </ListItem>
+                    
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>

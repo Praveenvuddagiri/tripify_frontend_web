@@ -54,24 +54,22 @@ const initialValues = {
     rooms: []
 };
 
-const ViewHotel = ({jumpToTab}) => {
+const ViewHotel = ({ jumpToTab }) => {
     const [hotel, setHotel] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [open, setOpen] = useState(false);
+
     const [islands, setIslands] = useState([]);
-    const [locationUrl, setLocationUrl] = useState("");
     const [imagePreview, setImagePreview] = useState([]);
     useEffect(() => {
         if (!localStorage.getItem("hotel")) {
-          jumpToTab(3);
+            jumpToTab(3);
         } else {
-          const ho = JSON.parse(localStorage.getItem("hotel"));
-          setHotel(ho);
-          setImagePreview(ho.images);
+            const ho = JSON.parse(localStorage.getItem("hotel"));
+            setHotel(ho);
+            setImagePreview(ho.images);
         }
-      }, []);
+    }, []);
 
     const fetchIslandData = async () => {
         try {
@@ -94,7 +92,7 @@ const ViewHotel = ({jumpToTab}) => {
             setError(error.response.data);
         }
     };
-  
+
     useEffect(() => {
         fetchIslandData();
     }, []);
@@ -168,25 +166,6 @@ const ViewHotel = ({jumpToTab}) => {
 
                     <Grid item xs={12}>
                         <Typography variant="h6">Images</Typography>
-
-                        <input
-                            accept="images/*"
-                            id="images-upload"
-                            type="file"
-                            multiple
-                            style={{ display: "none" }}
-                            name="images"
-                        />
-                        <label htmlFor="images-upload">
-                            <Button
-                                variant="contained"
-                                component="span"
-                                startIcon={<AddCircleRoundedIcon />}
-                                sx={{ mt: 2 }}
-                            >
-                                Add Hotel Images
-                            </Button>
-                        </label>
                         <Grid container spacing={2} sx={{ mt: 2 }}>
                             {imagePreview.map((image, index) => (
                                 <Grid item xs={4} key={index}>
@@ -205,12 +184,7 @@ const ViewHotel = ({jumpToTab}) => {
                                             alt={image.id}
                                             style={{ height: "100%", width: "auto" }}
                                         />
-                                        <IconButton
-                                            aria-label="delete"
-                                            sx={{ position: "absolute", top: 5, right: 5 }}
-                                        >
-                                            <DeleteRoundedIcon />
-                                        </IconButton>
+
                                     </Paper>
                                 </Grid>
                             ))}
@@ -220,34 +194,7 @@ const ViewHotel = ({jumpToTab}) => {
                     <Grid item xs={12}>
                         <Typography variant="h6">Location</Typography>
                         <Grid container spacing={2} alignItems="center">
-                            <Grid
-                                item
-                                xs={12}
-                                sm={12}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <TextField
-                                    sx={{ mt: 2, mr: 3, width: "70%" }}
-                                    fullWidth
-                                    label="URL"
-                                    name="locationUrl"
-                                    type="text"
-                                    value={locationUrl}
-                                    onChange={(e) => setLocationUrl(e.target.value)}
-                                    sm={8}
-                                />
-                                <Button
-                                    sx={{ mt: 2, mr: 3, width: "25%" }}
-                                    style={{ marginLeft: "20px" }}
-                                    variant="outlined"
-                                >
-                                    Get Coordinates
-                                </Button>
-                            </Grid>
+
                             <Grid
                                 item
                                 xs={12}
@@ -289,6 +236,7 @@ const ViewHotel = ({jumpToTab}) => {
                                         name="island"
                                         label="Island"
                                         value={hotel.island}
+                                        disabled
                                     >
                                         {islands &&
                                             islands.map((island) => (
@@ -389,26 +337,19 @@ const ViewHotel = ({jumpToTab}) => {
                             label="Contact website"
                             value={hotel.contact.website}
                             fullWidth
+                            disabled
                             error={Boolean(errors.contact?.website)}
                             helperText={errors.contact?.website}
                         />
                     </Grid>
 
                     <Grid item xs={12}>
-                        <input
-                            accept=".pdf"
-                            id="govt-upload"
-                            type="file"
-                            style={{ display: "none" }}
-                            name="governmentAuthorizedLicense"
-                        />
-                        <label htmlFor="govt-upload">
-                        </label>
+
                         {hotel.governmentAuthorizedLicense && (
                             <Grid
                                 item
                                 xs={7}
-                                key={hotel.governmentAuthorizedLicense.name}
+                                key={hotel.governmentAuthorizedLicense.id}
                                 mt={2}
                             >
                                 <Paper
@@ -450,68 +391,138 @@ const ViewHotel = ({jumpToTab}) => {
                                             label={`Facility ${index + 1}`}
                                             required
                                             value={facility}
+                                            disabled
                                         />
-                                        <Grid ml={5}>
-                                            <Button
-                                                variant="contained"
-                                                startIcon={<RemoveCircleRoundedIcon />}
-                                            >
-                                                Remove
-                                            </Button>
-                                        </Grid>
+
                                     </Grid>
                                 ))}
-                                <div sx={{ display: "flex", alignItems: "center" }}>
-                                    <Button
-                                        variant="contained"
-                                        startIcon={<AddCircleRoundedIcon />}
-                                    >
-                                        Add Facility
-                                    </Button>
-                                </div>
+
                             </FormGroup>
                         </Grid>
                     </Grid>
 
-                    <RoomForm hotel={hotel} setHotel={setHotel} />
-
-                    {isLoading ? (
-                        <LoadingButton
-                            loading={isLoading}
-                            variant="contained"
-                            fullWidth
-                            disabled
-                            style={{ height: "40px" }}
-                        >
-                            <span>disabled</span>
-                        </LoadingButton>
-                    ) : (
+                    <>
                         <Grid item xs={12}>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                            >
-                                Add Hotel
-                            </Button>
+                            <Typography variant="h6">Rooms</Typography>
                         </Grid>
-                    )}
+                        {hotel.rooms && hotel.rooms.map((room, index) => (
+                            <React.Fragment key={index}>
+                                <Grid item xs={12} sm={12}>
+                                    <h4>Room - {index + 1}</h4>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6}>
+                                    <FormControl variant="standard" fullWidth>
+                                        <InputLabel>Room Type</InputLabel>
+                                        <Select
+                                            name="roomType"
+                                            disabled
+                                            value={room.roomType}
+                                            required
+                                        >
+                                            <MenuItem value="Single Room">Single Room</MenuItem>
+                                            <MenuItem value="Twin Room">Twin Room</MenuItem>
+                                            <MenuItem value="Triple Room">Triple Room</MenuItem>
+                                            <MenuItem value="Family Room">Family Room</MenuItem>
+                                            <MenuItem value="Suite Room">Suite Room</MenuItem>
+                                            <MenuItem value="Deluxe Room">Deluxe Room</MenuItem>
+                                            <MenuItem value="Cottage">Cottage</MenuItem>
+                                            <MenuItem value="Dormitory Room">Dormitory Room</MenuItem>
+                                            <MenuItem value="Executive Suite">Executive Suite</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        name="price"
+                                        label="Price(Rs.) "
+                                        type="number"
+                                        value={room.price}
+                                        disabled
+                                        fullWidth
+                                        required
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        name="maxOccupancy"
+                                        label="Max Occupancy"
+                                        value={room.maxOccupancy}
+                                        disabled
+                                        fullWidth
+                                        required
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="description"
+                                        label="Description"
+                                        value={room.description}
+                                       
+                                        fullWidth
+                                        rows={2}
+                                        multiline
+                                        required
+                                        disabled
+                                    />
+                                </Grid>
 
 
+                                <Grid item xs={12} sm={6}>
+                                    <FormControl variant="standard" fullWidth>
+                                        <InputLabel>Bed Type</InputLabel>
+                                        <Select
+                                            disabled
+                                            name="bedType"
+                                            value={room.beds.bedType}
+                                            
+                                            required
+                                        >
+                                            <MenuItem value="Single">Single</MenuItem>
+                                            <MenuItem value="Twin">Twin</MenuItem>
+                                            <MenuItem value="Double">Double</MenuItem>
+                                            <MenuItem value="Queen">Queen</MenuItem>
+                                            <MenuItem value="King">King</MenuItem>
+                                            <MenuItem value="Super King">Super King</MenuItem>
+                                            <MenuItem value="Bunk Bed">Bunk Bed</MenuItem>
+                                            <MenuItem value="Sofa Bed">Sofa Bed</MenuItem>
+                                            <MenuItem value="Futon">Futon</MenuItem>
+                                            <MenuItem value="Trundle Bed">Trundle Bed</MenuItem>
+                                            <MenuItem value="Murphy Bed">Murphy Bed</MenuItem>
+                                            <MenuItem value="Day Bed">Day Bed</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        type="number"
+                                        name="quantity"
+                                        label="Bed Quantity"
+                                        value={room.beds.quantity}
+                                        fullWidth
+                                        required
+                                        disabled
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={9}>
+                                    <TextField
+                                        name="amenities"
+                                        label="Amenities"
+                                        value={room.amenities.join(', ')}
+                                        fullWidth
+                                        helperText="Separate multiple amenities with commas(,)"
+                                        multiline
+                                        disabled
+                                    />
+                                </Grid>
 
+                               
+                            </React.Fragment>
+                        ))}
+                        
+                    </>
                 </Grid>
             </Container>
-            {error && (
-                <Snackbar open={open} autoHideDuration={6000} >
-                    <Alert
-                        severity={error.errorType}
-                        sx={{ width: "100%" }}
-                    >
-                        {error.message}
-                    </Alert>
-                </Snackbar>
-            )}
         </form>
     );
 };

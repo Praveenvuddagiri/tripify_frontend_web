@@ -72,7 +72,7 @@ function HotelCard({ hotel, setError, handleClick, fetchData, jumpToTab }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
-        sx={{ height: 100, width: 250 }}
+        sx={{ height: 140 }}
         image={hotel.images[0].secure_url}
         title={hotel.images[0].id}
       />
