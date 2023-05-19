@@ -1,6 +1,6 @@
 export const AppName = "Tripify";
-// export const baseAPI = "https://tripify-backend-0hxm.onrender.com/"
-export const baseAPI = "http://localhost:4000/"
+export const baseAPI = "https://tripify-backend-0hxm.onrender.com/"
+// export const baseAPI = "http://localhost:4000/"
 export const loginAPI = "api/v1/admin/login";
 export const signUpAPI = "api/v1/signup";
 export const forgotPasswordAPI = "api/v1/forgotpassword";
