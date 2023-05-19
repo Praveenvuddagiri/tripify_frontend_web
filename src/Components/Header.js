@@ -4,6 +4,7 @@ import { useStateValue } from '../State/StateProvider';
 import { AppBar, Toolbar, Typography, Button, Avatar, Tooltip, IconButton } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { logoUrl } from '../GlobalConstants';
 function Header() {
   const [{ user }] = useStateValue();
   const navigate = useNavigate();
@@ -16,8 +17,9 @@ function Header() {
   const userData = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <AppBar position="fixed" color={userData ? userData.role !== 'admin'? 'secondary': 'primary': 'primary'}>
+    <AppBar position="fixed" color={userData ? userData.role !== 'admin' ? 'secondary' : 'primary' : 'primary'}>
       <Toolbar>
+        <img src={logoUrl} alt="Company Logo" style={{ marginRight: '1rem',width:'65px' }} />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           TRIPIFY ANDAMAN
         </Typography>

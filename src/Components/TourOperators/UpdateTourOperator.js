@@ -11,12 +11,14 @@ import {
     Paper,
     Snackbar,
     Alert,
+    Modal,
 } from '@mui/material';
 import { baseAPI, deleteUpdateTourOperator } from '../../GlobalConstants';
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
+import UpdateFilesForm from './UpdateFilesForm';
 
-const UpdateTourOperator = ({jumpToTab}) => {
+const UpdateTourOperator = ({ jumpToTab }) => {
     const [company, setCompany] = useState({
         name: '',
         description: '',
@@ -41,14 +43,17 @@ const UpdateTourOperator = ({jumpToTab}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
+    const [openModal, setOpenModal] = useState(false);
+
+
     useEffect(() => {
         if (!localStorage.getItem("touroperator")) {
-          jumpToTab(2);
+            jumpToTab(0);
         } else {
-          const tour = JSON.parse(localStorage.getItem("touroperator"));
-          setCompany(tour);
+            const tour = JSON.parse(localStorage.getItem("touroperator"));
+            setCompany(tour);
         }
-      }, []);
+    }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -185,6 +190,20 @@ const UpdateTourOperator = ({jumpToTab}) => {
                             helperText={errors.description}
                         />
                     </Grid>
+
+                    <div style={{ marginTop: 20, marginLeft: 20 }}>
+                        <Button variant='contained' onClick={() => setOpenModal(true)}>Open Image Update Form</Button>
+                        <Modal open={openModal} style={{overflow: 'scroll'}} onClose={() => setOpenModal(false)}>
+                            <UpdateFilesForm
+                                company={company}
+                                setCompany={setCompany}
+                                setError={setError}
+                                handleClick={handleClick}
+                                setOpenModal={setOpenModal}
+                                jumpToTab={jumpToTab}
+                            />
+                        </Modal>
+                    </div>
 
                     <Grid item xs={12}>
                         <Typography variant="h6" >Address</Typography>

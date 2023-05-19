@@ -32,7 +32,7 @@ const ViewTourOperator = ({ jumpToTab }) => {
 
     useEffect(() => {
         if (!localStorage.getItem("touroperator")) {
-            jumpToTab(1);
+            jumpToTab(0);
         } else {
             const tour = JSON.parse(localStorage.getItem("touroperator"));
             setCompany(tour);

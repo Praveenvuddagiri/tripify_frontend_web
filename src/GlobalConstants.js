@@ -1,6 +1,6 @@
 export const AppName = "Tripify";
-export const baseAPI = "https://tripify-backend-0hxm.onrender.com/"
-// export const baseAPI = "http://localhost:4000/"
+// export const baseAPI = "https://tripify-backend-0hxm.onrender.com/"
+export const baseAPI = "http://localhost:4000/"
 export const loginAPI = "api/v1/admin/login";
 export const signUpAPI = "api/v1/signup";
 export const forgotPasswordAPI = "api/v1/forgotpassword";
@@ -40,3 +40,9 @@ export const deleteUpdateHotel = "api/v1/hotel";
 export const addHotelByServiceProviderAPI = "api/v1/hotel/add";
 export const getRestaurantsPerServiceProvider = "api/v1/serviceprovider/restaurants";
 export const getHotelsPerServiceProvider = "api/v1/serviceprovider/hotels";
+
+
+
+
+
+export const logoUrl='https://res.cloudinary.com/diowg4rud/image/upload/v1684495208/webLogo_pvgfkx.png';

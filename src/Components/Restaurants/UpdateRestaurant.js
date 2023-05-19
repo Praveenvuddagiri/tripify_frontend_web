@@ -3,7 +3,7 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import Icon from "@mdi/react";
 import { mdiSquareCircle } from "@mdi/js";
-import UpdateRestaurantFiles from './UpdateRestaurantFiles';
+import UpdateFilesForm from './UpdateFilesForm';
 
 
 import {
@@ -25,14 +25,14 @@ import {
   Modal
 } from "@mui/material";
 import {
-    deleteUpdateRestaurant,
+  deleteUpdateRestaurant,
   baseAPI,
   getAllIslands,
 } from "../../GlobalConstants";
 import axios from "axios";
 import { LoadingButton } from "@mui/lab";
 
-const UpdateRestuarant = ({jumpToTab}) => {
+const UpdateRestuarant = ({ jumpToTab }) => {
   const [restaurant, setRestaurant] = useState({
     name: "",
     description: "",
@@ -338,20 +338,25 @@ const UpdateRestuarant = ({jumpToTab}) => {
             />
           </Grid>
 
-          <Grid item xs={12}>
-          <div style={{marginTop:20, marginLeft:20}}>
-                    <Button variant='contained' onClick={() => setOpenModal(true)}>Open Files Update Form</Button>
-                    <Modal open={openModal} onClose={() => setOpenModal(false)}>
-                      <UpdateRestaurantFiles
-                        restaurant={restaurant}
-                        setRestaurant={setRestaurant}
-                        setError={setError}
-                        handleClick={handleClick}
-                        setOpenModal={setOpenModal}
-                      />
-                    </Modal>
-                  </div>
+
+          <Grid item xs={12} sm={12}>
+            <div style={{ marginTop: 20, marginLeft: 20 }}>
+              <Button variant='contained' onClick={() => setOpenModal(true)}>Open Image Update Form</Button>
+              <Modal open={openModal} style={{ overflow: 'scroll' }} onClose={() => setOpenModal(false)}>
+                <UpdateFilesForm
+                 restaurant={restaurant}
+                 setRestaurant={setRestaurant}
+                  setError={setError}
+                  handleClick={handleClick}
+                  setOpenModal={setOpenModal}
+                  jumpToTab={jumpToTab}
+                />
+              </Modal>
+            </div>
+
           </Grid>
+
+          
 
           <Grid item xs={12}>
             <Typography variant="h6">Location</Typography>

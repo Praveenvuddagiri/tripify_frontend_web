@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 
 import {
@@ -18,6 +17,7 @@ import {
     FormControl,
     InputLabel,
     FormGroup,
+    Modal,
 } from "@mui/material";
 import {
     UpdateHotelServiceProvider,
@@ -28,50 +28,54 @@ import {
 import axios from "axios";
 import { LoadingButton } from "@mui/lab";
 import RoomForm from "./RoomForm";
+import UpdateFilesForm from './UpdateFilesForm';
 
-const UpdateHotel = ({jumpToTab}) => {
-const [hotel, setHotel] = useState ({
-    name: "",
-    description: "",
-    images: [],
-    address: {
-        street: "",
-        city: "",
-        state: "Andaman and Nicobar Islands",
-        zip: "",
-    },
-    contact: {
-        phone: "",
-        email: "",
-        website: "",
-    },
-    governmentAuthorizedLicense: null,
-    island: "",
-    location: {
-        type: "Point",
-        coordinates: ["", ""],
-    },
-    facilities: [],
-    checkinTime: '',
-    checkoutTime: '',
-    rooms: []
- });
+
+const UpdateHotel = ({ jumpToTab }) => {
+    const [hotel, setHotel] = useState({
+        name: "",
+        description: "",
+        images: [],
+        address: {
+            street: "",
+            city: "",
+            state: "Andaman and Nicobar Islands",
+            zip: "",
+        },
+        contact: {
+            phone: "",
+            email: "",
+            website: "",
+        },
+        governmentAuthorizedLicense: null,
+        island: "",
+        location: {
+            type: "Point",
+            coordinates: ["", ""],
+        },
+        facilities: [],
+        checkinTime: '',
+        checkoutTime: '',
+        rooms: []
+    });
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [islands, setIslands] = useState([]);
     const [locationUrl, setLocationUrl] = useState("");
-    const [imagePreview, setImagePreview] = useState([]);
+
+    const [openModal, setOpenModal] = useState(false);
+
 
     useEffect(() => {
         if (!localStorage.getItem("hotel")) {
-          jumpToTab(2);
+            jumpToTab(0);
         } else {
-          const ho = JSON.parse(localStorage.getItem("hotel"));
-          setHotel(ho);
+            const ho = JSON.parse(localStorage.getItem("hotel"));
+            setHotel(ho);
         }
-      }, []);
+    }, []);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setHotel((prevState) => ({
@@ -103,7 +107,7 @@ const [hotel, setHotel] = useState ({
             handleClick();
         }
     };
- 
+
 
     const handleLocationChange = (event) => {
         const { name, value } = event.target;
@@ -232,32 +236,7 @@ const [hotel, setHotel] = useState ({
         console.log(hotel);
     }, [hotel]);
 
-    // images
-    const handleImageChange = (event) => {
-        const files = Array.from(event.target.files);
-        const imagesArray = files.map((file) => ({
-            file,
-            preview: URL.createObjectURL(file),
-        }));
-        setImagePreview((prevImages) => [...prevImages, ...imagesArray]);
 
-        var imgs = hotel.images;
-        imgs = [...imgs, ...files];
-        setHotel((prevFormValues) => ({
-            ...prevFormValues,
-            images: imgs,
-        }));
-    };
-
-    const handleImageDelete = (index) => {
-        setImagePreview((prevImages) => prevImages.filter((_, i) => i !== index));
-        var imgs = hotel.images;
-        imgs = imgs.filter((_, i) => i !== index);
-        setHotel((prevFormValues) => ({
-            ...prevFormValues,
-            images: imgs,
-        }));
-    };
 
 
     const handleFacilityChange = (event, index) => {
@@ -346,6 +325,23 @@ const [hotel, setHotel] = useState ({
                             required
                         />
                     </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <div style={{ marginTop: 20, marginLeft: 20 }}>
+                            <Button variant='contained' onClick={() => setOpenModal(true)}>Open Image Update Form</Button>
+                            <Modal open={openModal} style={{ overflow: 'scroll' }} onClose={() => setOpenModal(false)}>
+                                <UpdateFilesForm
+                                    hotel={hotel}
+                                    setHotel={setHotel}
+                                    setError={setError}
+                                    handleClick={handleClick}
+                                    setOpenModal={setOpenModal}
+                                    jumpToTab={jumpToTab}
+                                />
+                            </Modal>
+                        </div>
+
+                    </Grid>
+
 
                     <Grid item xs={12}>
                         <Typography variant="h6">Location</Typography>

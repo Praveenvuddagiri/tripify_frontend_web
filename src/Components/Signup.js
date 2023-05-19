@@ -65,7 +65,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("serviceprovider");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -197,11 +197,11 @@ const Signup = () => {
                 label="Role"
                 variant="outlined"
                 select
+                disabled
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 required
               >
-                <MenuItem value="admin">Admin</MenuItem>
                 <MenuItem value="serviceprovider">Service Provider</MenuItem>
               </TextField>
             </FieldBox>

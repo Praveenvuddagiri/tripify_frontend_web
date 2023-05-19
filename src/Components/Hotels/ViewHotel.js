@@ -63,7 +63,7 @@ const ViewHotel = ({ jumpToTab }) => {
     const [imagePreview, setImagePreview] = useState([]);
     useEffect(() => {
         if (!localStorage.getItem("hotel")) {
-            jumpToTab(3);
+            jumpToTab(0);
         } else {
             const ho = JSON.parse(localStorage.getItem("hotel"));
             setHotel(ho);
