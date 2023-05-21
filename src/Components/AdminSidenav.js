@@ -29,6 +29,8 @@ import ServiceProviderListPage from "./ServiceProviders/ServiceProviderListPage"
 import AdminHotelHome from "./AdminHotels/AdminHotelHome";
 import TourOperatorHome from "./AdminTourOperators/AdminTourOperatorHome";
 import AdminRestaurantHome from "./AdminRestraunts/AdminRestaurantHome";
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import FeedbackListPage from "./Feedbacks/FeedbackListPage";
 
 const drawerWidth = 240;
 
@@ -55,6 +57,8 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
         return <ServiceProviderListPage />;
       case "approvals":
         return <ApprovalHome />;
+      case "feedbacks":
+        return <FeedbackListPage />;
       default:
         return null;
     }
@@ -191,6 +195,17 @@ const AdminSidenav = ({ selectedMenuItem, onMenuItemClick }) => {
               <CheckCircleIcon sx={{ color: "#fff" }} />
             </ListItemIcon>
             <ListItemText primary="Approvals" sx={{ color: "#fff" }} />
+          </ListItem>
+          <ListItem
+            button
+            selected={selectedMenuItem === "feedbacks"}
+            onClick={() => onMenuItemClick("feedbacks")}
+            sx={{ "&:hover": { backgroundColor: "#2F3E62" } }}
+          >
+            <ListItemIcon>
+              <FeedbackIcon sx={{ color: "#fff" }} />
+            </ListItemIcon>
+            <ListItemText primary="Feedbacks" sx={{ color: "#fff" }} />
           </ListItem>
         </List>
       </Drawer>
