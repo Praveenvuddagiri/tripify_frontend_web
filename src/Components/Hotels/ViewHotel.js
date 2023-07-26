@@ -22,10 +22,12 @@ import {
 import {
     baseAPI,
     getAllIslands,
+    getAllReviewsPerHotel,
 } from "../../GlobalConstants";
 import axios from "axios";
 import { LoadingButton } from "@mui/lab";
 import RoomForm from "./RoomForm";
+import ReviewsCard from "../Places/FormElements/ReviewCard";
 
 const initialValues = {
     name: "",
@@ -58,7 +60,7 @@ const ViewHotel = ({ jumpToTab }) => {
     const [hotel, setHotel] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
-
+    const [reviewsData, setReviewsData] = useState({});
     const [islands, setIslands] = useState([]);
     const [imagePreview, setImagePreview] = useState([]);
     useEffect(() => {
@@ -70,6 +72,42 @@ const ViewHotel = ({ jumpToTab }) => {
             setImagePreview(ho.images);
         }
     }, []);
+
+    const fetchRatingsData = async () => {
+        try {
+            const response = await axios.get(`${baseAPI}${getAllReviewsPerHotel}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                },
+                params: {
+                    id: hotel._id.toString()
+                }
+            });
+
+            var data = response.data;
+            data.positivePercent = (data.positiveResponse / data.numberOfReviews) * 100;
+            data.negativePercent = (data.negativeResponse / data.numberOfReviews) * 100;
+            data.neutralPercent = (data.neutralResponse / data.numberOfReviews) * 100;
+
+            const ratingsData = [
+                { x: `One Star-(${data.oneCount})`, y: data.oneCount },
+                { x: `Two Star-(${data.twoCount})`, y: data.twoCount },
+                { x: `Three Star-(${data.threeCount})`, y: data.threeCount },
+                { x: `Four Star-(${data.fourCount})`, y: data.fourCount },
+                { x: `Five Star-(${data.fiveCount})`, y: data.fiveCount },
+            ];
+
+            data.ratingsData = ratingsData;
+
+            setReviewsData(data);
+
+
+        } catch (error) {
+
+        }
+    }
 
     const fetchIslandData = async () => {
         try {
@@ -99,6 +137,7 @@ const ViewHotel = ({ jumpToTab }) => {
 
     useEffect(() => {
         console.log(hotel);
+        fetchRatingsData();
     }, [hotel]);
 
     return (
@@ -458,7 +497,7 @@ const ViewHotel = ({ jumpToTab }) => {
                                         name="description"
                                         label="Description"
                                         value={room.description}
-                                       
+
                                         fullWidth
                                         rows={2}
                                         multiline
@@ -475,7 +514,7 @@ const ViewHotel = ({ jumpToTab }) => {
                                             disabled
                                             name="bedType"
                                             value={room.beds.bedType}
-                                            
+
                                             required
                                         >
                                             <MenuItem value="Single">Single</MenuItem>
@@ -510,17 +549,23 @@ const ViewHotel = ({ jumpToTab }) => {
                                         label="Amenities"
                                         value={room.amenities.join(', ')}
                                         fullWidth
-                                        helperText="Separate multiple amenities with commas(,)"
                                         multiline
                                         disabled
                                     />
                                 </Grid>
 
-                               
                             </React.Fragment>
                         ))}
-                        
+
                     </>
+
+                    <Grid item xs={12} container spacing={2} alignItems="center">
+
+                        <ReviewsCard
+                            reviewsData={reviewsData}
+                        />
+
+                    </Grid>
                 </Grid>
             </Container>
         </form>

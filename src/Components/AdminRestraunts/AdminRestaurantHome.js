@@ -64,7 +64,7 @@ export default function AdminRestaurantHome() {
         <AllRestaurants jumpToTab={jumpToTab} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ViewRestaurant />
+        <ViewRestaurant jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );

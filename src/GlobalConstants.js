@@ -38,6 +38,7 @@ export const deleteUpdateRestaurant = "api/v1/restaurant";
 export const deleteUpdateTourOperator = "api/v1/touroperator";
 export const deleteUpdateHotel = "api/v1/hotel";
 export const addHotelByServiceProviderAPI = "api/v1/hotel/add";
+export const getAllReviewsPerHotel = "api/v1/hotel/reviews";
 export const getRestaurantsPerServiceProvider = "api/v1/serviceprovider/restaurants";
 export const getHotelsPerServiceProvider = "api/v1/serviceprovider/hotels";
 export const getFeedbacksAdmin = "api/v1/feedback/all";

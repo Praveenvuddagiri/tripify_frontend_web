@@ -21,11 +21,14 @@ function Home() {
     var decoded = jwt_decode(token);
 
     if (decoded.exp * 1000 < Date.now()) {
+      localStorage.clear();
       navigate('/login');
     }
   }
 
   useEffect(() => {
+
+    
     if (!localStorage.getItem('user')) {
       navigate('/login');
     }
@@ -35,6 +38,7 @@ function Home() {
     setRole(JSON.parse(localStorage.getItem('user')).role);
 
   }, [])
+
 
 
 

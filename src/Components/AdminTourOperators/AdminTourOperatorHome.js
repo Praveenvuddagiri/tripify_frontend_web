@@ -48,6 +48,7 @@ export default function AdminTourOperatorHome() {
   };
 
   const jumpToTab = (index) => {
+    console.log(index+"sfsfsfbs");
     setValue(index);
   }
 
@@ -64,7 +65,7 @@ export default function AdminTourOperatorHome() {
         <AllTourOperators jumpToTab={jumpToTab} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ViewTourOperator />
+        <ViewTourOperator jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );

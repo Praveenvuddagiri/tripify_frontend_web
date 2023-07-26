@@ -64,7 +64,7 @@ export default function AdminHotelHome() {
         <AllHotels jumpToTab={jumpToTab} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ViewHotel />
+        <ViewHotel jumpToTab={jumpToTab}/>
       </TabPanel>
     </Box>
   );
